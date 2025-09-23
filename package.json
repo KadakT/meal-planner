@@ -1,0 +1,13 @@
+{
+  "name": "meal-planner",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:ui": "npm run start --workspace meal-planner-ui",
+    "dev:api": "npm run dev --workspace meal-planner-api",
+    "build:ui": "npm run build --workspace meal-planner-ui",
+    "build:api": "npm run build --workspace meal-planner-api"
+  }
+}
