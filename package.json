@@ -1,13 +1,26 @@
 {
   "name": "meal-planner",
+  "version": "1.0.0",
   "private": true,
   "workspaces": [
     "packages/*"
   ],
   "scripts": {
-    "dev:ui": "npm run start --workspace meal-planner-ui",
-    "dev:api": "npm run dev --workspace meal-planner-api",
+    "build:shared": "npm run build --workspace @meal-planner/shared",
+    "build:api": "npm run build --workspace meal-planner-api",
     "build:ui": "npm run build --workspace meal-planner-ui",
-    "build:api": "npm run build --workspace meal-planner-api"
+    "build:all": "npm run build:shared && npm run build:api && npm run build:ui",
+    "dev:api": "npm run build:shared && npm run dev --workspace meal-planner-api",
+    "dev:ui": "npm run build:shared && npm run start --workspace meal-planner-ui"
+  },
+  "overrides": {
+      "rxjs": "7.8.1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "concurrently": "^9.2.1"
   }
 }

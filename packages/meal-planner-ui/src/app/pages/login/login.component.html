@@ -1,0 +1,28 @@
+<main class="login">
+    <div class="login__container">
+        <div class="login__welcome-container">
+            <div class="login__welcome-text">
+                <h2>
+                    @if (isLogin) {
+                        <span>Welcome Back</span>}
+                    @else {
+                        <span>Create Account</span>}
+                </h2>
+                <p></p>
+            </div>
+        </div>
+        <div class="login__sign-in">
+            <p>{{ errorMessage }}</p>
+            <app-login-form [isLogin]="isLogin" (onSubmitCredentials)="formSubmitted($event)">
+                <h1>MEMBER LOGIN</h1>
+                <app-buttons [btnClass]="'btn-secondary'" [btnType]="'submit'" (pressed)="switchForm(true)">LOGIN</app-buttons>
+                <app-buttons [btnClass]="'btn-primary'" [btnType]="'submit'" (pressed)="switchForm(false)">REGISTER</app-buttons>
+            </app-login-form>
+            <!-- @if (isLogin) {
+                <p>New Here? <a (click)="switchForm()">Create an Account</a></p>
+            }@else {
+                <p>Already a user? <a (click)="switchForm()">Sign In</a></p>
+            } -->
+        </div>
+    </div>
+</main>

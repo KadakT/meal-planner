@@ -1,0 +1,13 @@
+{
+  "name": "@meal-planner/shared",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+   "type": "commonjs",
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}

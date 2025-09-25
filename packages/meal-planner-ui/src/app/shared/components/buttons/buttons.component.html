@@ -1,0 +1,6 @@
+<button [attr.type]="btnType()" 
+        [attr.aria-lable]="btnLabel()"
+        (click)="onClick()"
+        [attr.class]="btnClass()">
+    <ng-content></ng-content>
+</button>
