@@ -1,2 +1,2 @@
 export * from './buttons/buttons.component';
-export * from './login-form/login-form.component'
+export * from './auth-form/auth-form.component'

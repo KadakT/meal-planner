@@ -1,0 +1,38 @@
+<div class="auth-form">
+    <ng-content select="h1"></ng-content>
+    <form [formGroup]="authForm" class="auth-form__inputs" (ngSubmit)="onSubmit()">
+        <div class="auth-form__group field">
+            <label class="auth-form__label" for="username" >Username</label>
+            <input 
+                formControlName="username" 
+                class="auth-form__field" 
+                id="username" 
+                type="text"
+                autocomplete="username"
+                name="username"
+                required
+                [attr.aria-invalid]="userNameRequired">
+        </div>
+        <div class="error" *ngIf="userNameRequired">Username is required</div>
+        <div class="auth-form__group field">
+            <label class="auth-form__label" for="password">Password</label>
+            <input formControlName="password" 
+                    class="auth-form__field" 
+                    id="password" 
+                    type="password"
+                    autocomplete="current-password"
+                    name="password"
+                    minlength="8"
+                    required
+                    [attr.aria-invalid]="passwordRequired">
+        </div>
+        <div class="error" *ngIf="passwordRequired">Password is required</div>
+        <div class="form-group">
+            <input formControlName="rememberMe" id="remember-me" type="checkbox">
+            <label for="remember-me">Remember Me</label>
+        </div>
+         <ng-content select="app-buttons"></ng-content>
+    </form>
+   
+   
+</div>

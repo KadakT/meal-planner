@@ -1,0 +1,36 @@
+/* Variables for theme mixin */
+$color-primary: #7c3aed;
+$color-primary-2: #4a0c6d;
+$color-highlight: #fde047;
+
+$color-background-light: #f5f6fa;
+$color-background-dark: #151515;
+$color-background-card-light: #ffffff;
+$color-background-card-dark: #1e1e1e;
+
+$color-text-primary-light: 	#1e1e1e;
+$color-text-primary-dark: #ffffff;
+$color-text-secondary-light: 	#6b7280;
+$color-text-secondary-dark: #cccccc;
+
+$color-border-muted-light: 	#e5e7eb;
+$color-border-muted-dark: #2a2a2a;
+
+
+$color-white: #ffffff;
+$color-themedark-base-900: #121212;
+$color-green-toggle: green;
+$color-themelight-base-500: grey;
+
+$box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+
+$themes: (
+  light: (
+    backgroundColor: $color-background-light,
+    textPrimary: $color-text-primary-light,
+  ),
+  dark: (
+    backgroundColor: $color-background-dark,
+    textPrimary: $color-text-primary-dark,
+  )
+);

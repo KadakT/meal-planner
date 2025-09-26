@@ -1,1 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
+@import 'scss/abstracts/functions';
+@import 'scss/abstracts/mixins';
+@import 'scss/abstracts/variables';
+
+@import 'scss/base/general';
+@import 'scss/base/typography';
+
+@import 'scss/componends/theme-switch';
+@import 'scss/componends/btns';
+@import 'scss/componends/form';
+
+@import 'scss/pages/login';

@@ -2,7 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { FooterComponent } from './layout/footer/footer.component';
 import { CommonModule } from '@angular/common';
-import { environment } from './environments/environment';
+import { environment } from './../environments/environment';
 import { HeaderComponent } from './layout/header/header.component';
 import { CookieKeys } from './shared/definitions';
 import { StorageService } from './core/services';

@@ -1,0 +1,71 @@
+/* Breakpoints  (The mobile first approach)*/
+/* How to use it:
+  for example:
+   @include respond(tap-port){
+     here will be your code!
+   }
+
+*/
+@mixin respond($breakpoint) {
+    @if $breakpoint == phone {
+      @media only screen and (min-width: 36em) {
+        @content;
+      } //576px
+    }
+    @if $breakpoint == big-phone {
+      @media only screen and (min-width: 48em) {
+        @content;
+      } //768px
+    }
+    @if $breakpoint == big-phone-with-sidebar {
+      @media only screen and (min-width: 48.0625em) {
+        @content;
+      } //769px
+    }
+    @if $breakpoint == tap-port {
+      @media only screen and (min-width: 62em) {
+        @content;
+      } //992px
+    }
+    @if $breakpoint == tap-land {
+      @media only screen and (min-width: 75em) {
+        @content;
+      } //1200px
+    }
+    @if $breakpoint == big-desktop {
+      @media only screen and (min-width: 87.5em) {
+        @content;
+      } //1400px
+    }
+  }
+
+  /* How to use theme mixin */
+// 1. Check if there are suitable variables for your purpose, if not add yours (_variables.scss). In dark and light theme variable name should be the same.
+// 2. Add mixin to needed place
+// 3.  @include themes() {
+//       color: getValue(primaryText);
+//     }
+
+// Mixin for Themes (light/dark)
+@mixin themes() {
+    $array: $themes;
+  
+    @each $theme, $map in $array {
+      .#{$theme} & {
+        $array-map: () !global;
+        @each $key, $submap in $map {
+          $value: map-get(map-get($array, $theme), '#{$key}');
+          $array-map: map-merge(
+            $array-map,
+            (
+              $key: $value
+            )
+          ) !global;
+        }
+  
+        @content;
+        $array-map: null !global;
+      }
+    }
+  }
+  

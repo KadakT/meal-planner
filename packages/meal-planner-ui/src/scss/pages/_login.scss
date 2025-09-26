@@ -1,0 +1,37 @@
+.login {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		height: 100%;
+		// .login__welcome-container
+		&__container{
+  			max-width: 1000px;
+            display: flex;
+            margin: 0 auto;
+			flex: 1;
+			box-shadow: $box-shadow;
+		}
+
+		&__welcome-container {
+			padding: 2rem 1rem 4rem 2rem;
+			background-color: $color-primary-2;
+          	width: 50%;
+		}
+
+		// .login__welcome-text
+
+		&__welcome-text {
+			color: white;
+		}
+
+		// .login__sign-in
+
+		&__sign-in {
+			padding: 2rem 2rem 4rem 1rem;
+			width: 50%;
+			flex: 1;
+			@include themes(){
+				background-color: getValue(backgroundColor);
+			}
+		}
+}

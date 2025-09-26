@@ -1,0 +1,95 @@
+// Theme radio swithcer from footer component
+.theme-radio-switch {
+    border: none;
+    padding: 0;
+    white-space: nowrap;
+    margin-top: 23%;
+  
+    &__label {
+      cursor: pointer;
+      display: inline-block;
+      height: 2rem;
+      font-size: 1rem;
+      position: relative;
+      z-index: 3;
+    }
+  
+    &__icon.ng-fa-icon {
+      font-size: 1.2rem;
+    }
+  
+    &__input {
+      opacity: 0;
+      position: absolute;
+    }
+  
+    &__label--1 {
+      padding-right: 5em;
+    }
+  
+    &__label--2 {
+      margin-left: -4.25em;
+      padding-left: 5em;
+    }
+  
+    &:focus-within .focused:after {
+      @include themes() {
+          // box-shadow: 0 0 0 2px getValue(backgroundColorFooterUpper), 0 0 0 3px getValue(focusColor);
+         // outline: 1px solid  getValue(focusColor);
+          outline-offset: 2px;
+        }
+    }
+  
+    label:first-of-type:before,
+    label:first-of-type:after {
+      content: '';
+      height: 1.5rem;
+      overflow: hidden;
+      pointer-events: none;
+      position: absolute;
+      vertical-align: middle;
+    }
+  
+    label:first-of-type:before {
+      background: $color-white;
+      border-radius: 100%;
+      position: absolute;
+      right: 1.435rem;
+      top: 0;
+      transform: translateX(0) translateY(11%);
+      transition: transform 0.2s ease-in-out;
+      width: 1.25rem;
+      height: 1.25rem;
+      z-index: 2;
+      box-shadow: 0px 2px 8px 0px #00000026;
+    }
+  
+    label:first-of-type:after {
+      top: 0;
+      background-image: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 14 14' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M6.98626 4.49609C8.36365 4.49609 9.48191 5.61436 9.48191 6.99175C9.48191 8.36914 8.36365 9.48741 6.98626 9.48741C5.60886 9.48741 4.4906 8.36914 4.4906 6.99175C4.4906 5.61436 5.60886 4.49609 6.98626 4.49609ZM6.98626 5.77725C7.65656 5.77725 8.20076 6.32145 8.20076 6.99175C8.20076 7.66205 7.65656 8.20625 6.98626 8.20625C6.31596 8.20625 5.77176 7.66205 5.77176 6.99175C5.77176 6.32145 6.31596 5.77725 6.98626 5.77725Z' fill='white'/%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M7.61052 0.943762C7.61052 0.606809 7.33696 0.333252 7.00001 0.333252C6.66305 0.333252 6.3895 0.606809 6.3895 0.943762V2.65201C6.3895 2.98896 6.66305 3.26252 7.00001 3.26252C7.33696 3.26252 7.61052 2.98896 7.61052 2.65201V0.943762Z' fill='white'/%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M7.61052 11.3478C7.61052 11.0109 7.33696 10.7373 7.00001 10.7373C6.66305 10.7373 6.3895 11.0109 6.3895 11.3478V13.0561C6.3895 13.393 6.66305 13.6666 7.00001 13.6666C7.33696 13.6666 7.61052 13.393 7.61052 13.0561V11.3478Z' fill='white'/%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M0.943854 6.38933C0.606901 6.38933 0.333344 6.66289 0.333344 6.99984C0.333344 7.33679 0.606901 7.61035 0.943854 7.61035H2.6521C2.98905 7.61035 3.26261 7.33679 3.26261 6.99984C3.26261 6.66289 2.98905 6.38933 2.6521 6.38933H0.943854Z' fill='white'/%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M11.3479 6.38933C11.011 6.38933 10.7374 6.66289 10.7374 6.99984C10.7374 7.33679 11.011 7.61035 11.3479 7.61035H13.0562C13.3931 7.61035 13.6667 7.33679 13.6667 6.99984C13.6667 6.66289 13.3931 6.38933 13.0562 6.38933H11.3479Z' fill='white'/%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M3.1454 2.28914C2.90694 2.05108 2.52007 2.05141 2.28201 2.28987C2.04395 2.52833 2.04427 2.9152 2.28274 3.15326L3.49166 4.36016C3.73012 4.59822 4.11699 4.59789 4.35505 4.35943C4.59311 4.12097 4.59279 3.7341 4.35432 3.49604L3.1454 2.28914Z' fill='white'/%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M10.5084 9.63973C10.2699 9.40167 9.88305 9.40199 9.64499 9.64045C9.40693 9.87891 9.40725 10.2658 9.64571 10.5038L10.8546 11.7107C11.0931 11.9488 11.48 11.9485 11.718 11.71C11.9561 11.4716 11.9558 11.0847 11.7173 10.8466L10.5084 9.63973Z' fill='white'/%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M2.2892 10.8544C2.05114 11.0929 2.05147 11.4798 2.28993 11.7178C2.52839 11.9559 2.91526 11.9556 3.15332 11.7171L4.36022 10.5082C4.59828 10.2697 4.59795 9.88286 4.35949 9.6448C4.12103 9.40674 3.73416 9.40706 3.4961 9.64552L2.2892 10.8544Z' fill='white'/%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M9.63982 3.49165C9.40176 3.73011 9.40208 4.11698 9.64054 4.35504C9.87901 4.59311 10.2659 4.59278 10.5039 4.35432L11.7108 3.1454C11.9489 2.90694 11.9486 2.52007 11.7101 2.28201C11.4716 2.04395 11.0848 2.04427 10.8467 2.28273L9.63982 3.49165Z' fill='white'/%3E%3C/svg%3E%0A");
+      background-repeat: no-repeat;
+      background-position: 2px center;
+      background-color: $color-green-toggle;
+      border-radius: 1em;
+      margin: 0 1em;
+      transition: background-color 0.2s ease-in-out;
+      width: 2.75em;
+    }
+  
+    input:first-of-type:checked ~ label:first-of-type:after {
+      background-color: $color-themelight-base-500;
+      background-image: url("data:image/svg+xml,%3Csvg width='14' height='15' viewBox='0 0 13 14' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6.83332 13.6666C8.88426 13.6666 10.7651 12.7342 12.0115 11.1985C12.7477 10.2914 11.9449 8.96614 10.8071 9.18284C8.66267 9.59125 6.68548 7.9519 6.68548 5.77679C6.68548 4.51575 7.36413 3.37336 8.44157 2.76023C9.45056 2.18601 9.19676 0.656377 8.05038 0.444632C7.64892 0.3706 7.24155 0.333319 6.83332 0.333252C3.15207 0.333252 0.166656 3.31698 0.166656 6.99992C0.166656 10.6812 3.1504 13.6666 6.83332 13.6666ZM6.83332 1.58325C7.17147 1.58325 7.5023 1.61453 7.82332 1.67382C6.39728 2.48536 5.43548 4.01867 5.43548 5.77679C5.43548 8.74158 8.13446 10.9643 11.041 10.4108C10.0479 11.6344 8.53204 12.4166 6.83332 12.4166C3.84178 12.4166 1.41666 9.99146 1.41666 6.99992C1.41666 4.00838 3.84178 1.58325 6.83332 1.58325Z' fill='white'/%3E%3C/svg%3E%0A");;
+      background-repeat: no-repeat;
+      background-position: 90% center;
+  }
+  
+    input:first-of-type:checked ~ label:first-of-type:before {
+      transform: translateX(-90%) translateY(11%);
+    }
+  
+    input:last-of-type:checked ~ label:last-of-type {
+      z-index: 1;
+    }
+  }
+  
+  
