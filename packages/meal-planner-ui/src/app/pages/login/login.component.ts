@@ -1,39 +1,43 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ApiError, AuthResponse, LoginPayload } from '@meal-planner/shared';
 import { AuthService, StorageService } from 'app/core/services';
 import { AuthFormComponent } from '@components/index';
 import { ButtonsComponent } from "../../shared/components/buttons/buttons.component";
-import { catchError, delay, EMPTY, filter, finalize, Subject, tap, throwError } from 'rxjs';
-import { SessionKeys } from 'app/shared/definitions';
+import { 
+  Subject } from 'rxjs';
 import { Router } from '@angular/router';
-import { HttpErrorResponse } from '@angular/common/http';
 import { FormGroup } from '@angular/forms';
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [AuthFormComponent, ButtonsComponent ],
   template: `
-            <div class="login__container">
-              <div class="login__welcome-container">
+    <div class="login">
+        <div class="login__container">
+          <div class="login__welcome-container">
                   <div class="login__welcome-text">
-                      <h2>Create Account</h2>
+                      <div class="logo logo--big">
+                          <img src="assets/svg/logo.svg" width="100" alt="Meal Planner Logo">
+                          <h1>Meal Planner</h1>
+                      </div>                      
                       <p></p>
                   </div>
-              </div>
-              <div class="login__sign-in">
+          </div>
+          <div class="login__sign-in">
                   <p>{{ errorMessage }}</p>
                   <app-auth-form [isLogin]="isLogin" (onSubmitCredentials)="formSubmitted($event)">
-                      <h1>MEMBER LOGIN</h1>
-                      <app-buttons [btnClass]="'btn-secondary'" [btnType]="'submit'">LOGIN</app-buttons>
+                      <h2>Member Login</h2>
+                      <app-buttons [btnClass]="'btn btn-primary'" [btnType]="'submit'">Login</app-buttons>
                   </app-auth-form>
                       <p>New Here? <a (click)="switchForm()"  tabindex="0">Create an Account</a></p>
-              </div>
+          </div>
         </div>
+      </div>
     `
 })
 
 
-export class LoginComponent implements OnInit{
+export class LoginComponent {
   private storageService = inject(StorageService);
   private authService = inject(AuthService);
   private router = inject(Router);
@@ -43,38 +47,22 @@ export class LoginComponent implements OnInit{
   public loading: boolean = false;
   public errorMessage: string = '';
 
-  ngOnInit(): void {
-    this.router.events.subscribe((e: any) =>{
-      console.log(e);
-    })
+  formSubmitted(event : FormGroup){
+   const {username, password}: LoginPayload = {
+    username: event.get('username')?.value,
+    password: event.get('password')?.value
+   }
+   const rememberMe = event.get('rememberMe')?.value || null;
+   this.login({username, password}, rememberMe);
   }
 
-  createUser(credentials : LoginPayload){
-    this.authService.registerUser(credentials).subscribe({
-      next: (res: AuthResponse) => this.handleSuccessfulLogin(res.token),
-      error: (err: ApiError) => {
-        this.errorMessage = err.message;
-      }
-    });
-  }
-
-  login(credentials : LoginPayload){
+  login(credentials : LoginPayload, rememberMe: boolean = false){
     this.authService.login(credentials).subscribe({
-      next: (res: AuthResponse) => this.handleSuccessfulLogin(res.token),
+      next: (res: AuthResponse) => this.authService.handleSuccessfulLogin(res.token, rememberMe),
       error: (err: ApiError) => {
         this.errorMessage = err.message;
       }
     });
-  }
-
-  handleSuccessfulLogin(token: string){
-      this.storageService.saveToStorage(SessionKeys.Token, token);
-      delay(1000),
-      this.router.navigate(['/dashboard']);
-  }
-
-  formSubmitted(credentials : FormGroup){
-    // this.isLogin ? this.login(credentials) : this.createUser(credentials);
   }
 
   switchForm(){

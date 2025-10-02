@@ -1,38 +1,61 @@
 <div class="auth-form">
-    <ng-content select="h1"></ng-content>
+    <ng-content select="h2"></ng-content>
     <form [formGroup]="authForm" class="auth-form__inputs" (ngSubmit)="onSubmit()">
-        <div class="auth-form__group field">
-            <label class="auth-form__label" for="username" >Username</label>
+        <div class="auth-form__group floating-label">
             <input 
                 formControlName="username" 
-                class="auth-form__field" 
+                placeholder="Username"
+                class="auth-form__field"
+                [class.error]="userNameRequired"
                 id="username" 
                 type="text"
                 autocomplete="username"
                 name="username"
                 required
-                [attr.aria-invalid]="userNameRequired">
+                appHasValue 
+                [attr.aria-invalid]="userNameRequired"/>
+            <label class="auth-form__label" for="username" >Username</label>                       
+            <div class="icon">
+                <svg class="icon" aria-hidden="true">
+                        <use href="assets/svg/sprite.svg#icon-user"></use>
+                </svg>
+            </div>
         </div>
         <div class="error" *ngIf="userNameRequired">Username is required</div>
-        <div class="auth-form__group field">
-            <label class="auth-form__label" for="password">Password</label>
+        <div class="auth-form__group floating-label">
             <input formControlName="password" 
+                    placeholder="Password"
                     class="auth-form__field" 
+                    [class.error]="passwordInvalid"
                     id="password" 
                     type="password"
                     autocomplete="current-password"
                     name="password"
                     minlength="8"
                     required
-                    [attr.aria-invalid]="passwordRequired">
+                    appHasValue 
+                    [attr.aria-invalid]="passwordInvalid"/>
+            <label class="auth-form__label" for="password">Password</label>
+            <div class="icon">
+                 <svg class="icon" aria-hidden="true">
+                        <use href="assets/svg/sprite.svg#icon-key"></use>
+                </svg>
+            </div>
         </div>
-        <div class="error" *ngIf="passwordRequired">Password is required</div>
-        <div class="form-group">
-            <input formControlName="rememberMe" id="remember-me" type="checkbox">
-            <label for="remember-me">Remember Me</label>
+        <div class="error">
+            @switch (passwordInvalid) {
+                @case ('required') { <span>Password is required.</span> }
+                @case ('minlength') { <span>Password must be at least 8 characters long.</span> }
+                @case ('pattern') {<span>Password must include at least one uppercase letter.</span> }
+            }
+        </div>
+      
+        <div class="custom-checkbox">
+            <label for="remember-me" class="custom-checkbox__checkbox">
+                <input formControlName="rememberMe" id="remember-me" type="checkbox"/>
+                <span class="custom-checkbox__checkmark"></span>
+                Remember Me</label>
         </div>
          <ng-content select="app-buttons"></ng-content>
     </form>
-   
-   
 </div>

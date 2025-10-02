@@ -1,0 +1,29 @@
+// Global link styles
+a {
+  color: $color-accent;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 2px;
+  font-weight: 500;
+  transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+
+  &:hover {
+    color: $color-accent-hover-dark;
+    background-color: rgba($color-accent, 0.1);
+    border-radius: 2px;
+  }
+
+  &:active {
+    color: $color-accent-active-dark;
+    background-color: rgba($color-accent, 0.2);
+  }
+
+  &:visited {
+    color: $color-accent-visited;
+  }
+
+  &:focus {
+    outline: 3px solid lighten($color-accent, 35%);
+    outline-offset: 2px;
+  }
+}

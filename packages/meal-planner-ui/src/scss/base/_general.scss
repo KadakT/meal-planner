@@ -1,3 +1,44 @@
+/* 1. Use a natural box layout */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* 2. Remove default margin */
+* {
+  margin: 0;
+}
+
+/* 3. Set sensible defaults */
+html, body {
+  height: 100%;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 4. Reset media elements */
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* 5. Remove built-in form typography styles */
+input, button, textarea, select {
+  font: inherit;
+}
+
+/* 6. Respect prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
 html{
     height: 100vh;
     width: 100vw;
@@ -10,4 +51,20 @@ body{
     width: 100%;
     margin: 0;
     padding: 0;
+}
+
+main{
+    height: 100%;
+}
+
+//FOCUS Global
+// Apply focus outline to all focusable elements
+:focus {
+  outline: 3px solid lighten($color-accent, 35%);
+  outline-offset: 2px;
+}
+
+// Ensure accessibility for keyboard users only
+:focus:not(:focus-visible) {
+  outline: none;
 }

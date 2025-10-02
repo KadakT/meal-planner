@@ -1,19 +1,29 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { environment } from './../../../environments/environment';
-import { catchError, finalize, Observable, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, delay, finalize, Observable, throwError } from 'rxjs';
 import { ApiError, AuthResponse, LoginPayload } from '@meal-planner/shared';
 import { LoadingService } from './loading.service';
+import { SessionKeys, TOKEN_TTL } from 'app/shared/definitions';
+import { TokenService } from './token.service';
+import { Router } from '@angular/router';
 
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class AuthService {
   private apiUrl = environment.apiUrl;
-  private loadingService = inject(LoadingService)
+  private loadingService = inject(LoadingService);
+  private tokenService = inject(TokenService);
+  private router = inject(Router);
+  private http = inject(HttpClient);
+  private loggedIn = new BehaviorSubject<boolean>(false);
 
-  constructor(private http: HttpClient) { }
+  isLoggedIn$ = this.loggedIn.asObservable();
+
+
 
   login(credentials: LoginPayload): Observable<AuthResponse> {
     this.loadingService.setLoading(true);
@@ -38,9 +48,17 @@ export class AuthService {
       })
     );
   }
-
-
   
+  isLoggedIn(): boolean {
+    return !!this.tokenService.getToken();
+  }
+
+  handleSuccessfulLogin(token: string, rememberMe: boolean) : void{
+    this.tokenService.storeTokenWithExpiry(token, rememberMe, TOKEN_TTL.REMEMBER_ME);
+    delay(1000),
+    this.router.navigate(['/dashboard']);
+    this.loggedIn.next(true);
+  }
 
   private handleError(error: HttpErrorResponse) {
     const apiError: ApiError = {
@@ -48,5 +66,12 @@ export class AuthService {
       message: error.error?.message || 'Unexpected error occurred',
     }
     return throwError(() => apiError);
+  }
+
+  logout(){
+        localStorage.removeItem(SessionKeys.Token);
+        sessionStorage.removeItem(SessionKeys.Token);
+        this.router.navigate(['/login']);
+        this.loggedIn.next(false);
   }
 }

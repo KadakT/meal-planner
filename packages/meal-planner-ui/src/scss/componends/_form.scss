@@ -1,59 +1,226 @@
-.auth-form__group {
-  position: relative;
-  padding: 15px 0 0;
-  margin-top: 10px;
-  width: 50%;
+// Autofill fix (Chrome, Safari, Edge - WebKit browsers)
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 1000px inherit inset !important; // force background to match parent
+  box-shadow: 0 0 0 1000px inherit inset !important;
+  -webkit-text-fill-color: inherit !important; // keep text color correct
+  transition: background-color 9999s ease-in-out 0s; // hack to prevent flash of yellow/blue
 }
 
-.auth-form__field {
-  font-family: inherit;
-  width: 100%;
-  border: 0;
-  border-bottom: 2px solid grey;
-  outline: 0;
-  font-size: 1.3rem;
-  color: $color-text-primary-light;
-  padding: 7px 0;
-  background: transparent;
-  transition: border-color 0.2s;
 
-  &::placeholder {
-    color: transparent;
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 1000px inherit inset !important;
+  box-shadow: 0 0 0 1000px inherit inset !important;
+  box-shadow: 0 0 0 1000px #2C2C2C inset !important;
+  transition: background-color 9999s ease-in-out 0s;
+
+  @include themes() {
+    -webkit-box-shadow: 0 0 0 1000px getValue(backgroundColorInput) inset !important;
+    -webkit-text-fill-color: getValue(textPrimary) !important;
+    color: getValue(textPrimary);
+    caret-color: getValue(textPrimary);
   }
 
-  &:placeholder-shown ~ .form__label {
-    font-size: 1.3rem;
-    cursor: text;
-    top: 20px;
-  }
+
+
 }
 
-.auth-form__label {
-  position: absolute;
-  top: 0;
-  display: block;
-  transition: 0.2s;
+
+label {
   font-size: 1rem;
-  color: gray;
+  font-weight: 400;
+
+  @include themes() {
+    color: getValue(textPrimary);
+  }
 }
 
-.auth-form__field:focus {
-  ~ .form__label {
-    position: absolute;
-    top: 0;
-    display: block;
-    transition: 0.2s;
-    font-size: 1rem;
-    color: $color-text-primary-light;
-    font-weight:700;    
+input {
+  font-size: 1rem;
+  padding: .375rem .75rem;
+  border: none;
+  font-weight: 400;
+  transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+
+  @include themes() {
+    background-color: getValue(backgroundColorInput) !important;
+    border-bottom: solid 1px getValue(borderInput);
+    color: getValue(textPrimary) !important;
   }
-  padding-bottom: 6px;  
-  font-weight: 700;
-  border-width: 3px;
-  border-image: linear-gradient(to right, $color-primary ,$color-primary-2);
-  border-image-slice: 1;
+
+  &:focus {
+    border-bottom: solid 1px $color-accent;
+    outline: 0;
+    box-shadow: 0 2px 6px -8px rgba($color-accent, .45);
+  }
 }
-/* reset input */
-.auth-form__field{
-  &:required,&:invalid { box-shadow:none; }
+
+.floating-label {
+  position: relative;
+  margin-bottom: 10px;
+  width: 100%;
+
+  label {
+    position: absolute;
+    top: calc(50% - 7px);
+    left: 0;
+    opacity: 0;
+    transition: all .3s ease;
+    padding-left: 44px;
+  }
+
+  input {
+    width: calc(100% - 44px);
+    margin-left: auto;
+    display: flex;
+  }
+
+  .icon {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    height: 65px;
+    width: 44px;
+    display: flex;
+    transform: translateY(-50%);
+
+    svg {
+      height: 30px;
+      width: 30px;
+      margin: auto;
+      opacity: .15;
+      transition: all .3s ease;
+
+      @include themes() {
+        color: getValue(textPrimary);
+      }
+
+      path {
+        transition: all .3s ease;
+      }
+    }
+  }
+
+  input:not(:placeholder-shown) {
+    padding: 28px 0px 4px 0px;
+  }
+
+  input:not(:placeholder-shown)+label,
+  input:-webkit-autofill+label,
+  input.has-value+label {
+    transform: translateY(-1rem);
+    opacity: .8;
+  }
+
+  input:valid:not(:placeholder-shown)+label+.icon {
+    svg {
+      opacity: 1;
+      color: $color-accent;
+    }
+  }
+
+  input:not(:valid):not(:focus)+label+.icon {
+    animation-name: shake-shake;
+    animation-duration: .3s;
+  }
+}
+
+.custom-checkbox {
+  &__checkbox {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 1rem;
+    line-height: 1.4;
+
+    input {
+      position: absolute;
+      opacity: 0;
+      cursor: inherit;
+      height: 0;
+      width: 0;
+    }
+  }
+
+  &__checkbox:hover .custom-checkbox__checkmark {
+    @include themes() {
+      border-color: getValue(borderInputHover);
+    }
+  }
+
+  &__checkmark {
+    position: relative;
+    width: 1.2rem;
+    height: 1.2rem;
+    border-radius: 0.25rem;
+    margin-right: 0.5rem;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    @include themes() {
+      background-color: getValue(backgroundColorInput);
+      border: 2px solid getValue(borderInput);
+    }
+
+    &::before {
+      content: '';
+      width: 0.5rem;
+      height: 0.8rem;
+      border-right: 2px solid transparent;
+      border-bottom: 2px solid transparent;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -65%) rotate(45deg);
+      opacity: 0;
+      transition: opacity 0.2s ease-in-out;
+    }
+  }
+
+  input:focus+.custom-checkbox__checkmark {
+    outline: 3px solid rgba($color-accent, 0.5);
+    outline-offset: 2px;
+  }
+
+  input:checked+.custom-checkbox__checkmark {
+    background-color: $color-accent;
+    border-color: $color-accent;
+
+    &::before {
+      border-color: #fff;
+      opacity: 1;
+    }
+  }
+}
+
+//ERRORS
+input.error {
+  border-color: $color-error-light;
+  @include themes(){
+    color: getValue(colorErrorText);
+  }
+  
+
+  &:focus {
+    border-color:  $color-error-light;
+    outline: none;
+  }
 }

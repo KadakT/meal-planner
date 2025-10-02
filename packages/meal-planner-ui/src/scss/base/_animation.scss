@@ -1,0 +1,8 @@
+@keyframes shake-shake {
+  0% { transform: translate(-$displacement, -50%);}
+  20% { transform: translate($displacement, -50%); }
+  40% { transform: translate(-$displacement, -50%);}
+  60% { transform: translate($displacement, -50%);}  
+  80% { transform: translate(-$displacement, -50%);}
+  100% { transform: translate(0px, -50%);}
+}

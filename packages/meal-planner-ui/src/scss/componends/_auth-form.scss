@@ -1,0 +1,14 @@
+.auth-form{
+    &__inputs{
+        max-width: 300px;
+    }
+    &__group {
+        input {
+            padding: 20px 0px;
+        }
+    }
+    &__group,
+    .custom-checkbox{
+        margin-bottom: 1.5rem;
+    }
+}

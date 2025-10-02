@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { ButtonsComponent } from '@components/index';
-import { LogoutService } from 'app/core/services';
+import { AuthService } from 'app/core/services';
 
 @Component({
   selector: 'app-header',
@@ -9,9 +9,9 @@ import { LogoutService } from 'app/core/services';
   templateUrl: './header.component.html'
 })
 export class HeaderComponent {
-  private logoutService = inject(LogoutService);
+  private authService = inject(AuthService);
 
   logOut(){
-    this.logoutService.logout();
+    this.authService.logout();
   }
 }

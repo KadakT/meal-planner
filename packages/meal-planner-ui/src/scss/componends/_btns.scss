@@ -1,213 +1,92 @@
-/* Primary */
+// Base button
+.btn {
+  display: inline-block;
+  cursor: pointer;
+  font-weight: normal;
+  border-radius: $radius-pill;
+  border: 1px solid transparent;
+  transition: all 0.2s ease-in-out;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 5px 14px;
+
+  &--small {
+    padding: 0.35rem 0.9rem;
+    font-size: 0.75rem;
+  }
+
+  &--large {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+  }
+
+  &:disabled,
+  &.disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+    pointer-events: none;
+  }
+}
+
+// Primary button (solid accent)
 .btn-primary {
-  align-items: center;
-  appearance: none;
-  background-clip: padding-box;
-  background-color: initial;
-  background-image: none;
-  border-style: none;
-  box-sizing: border-box;
+  background-color: $color-accent;
+  border-color: $color-accent;
   color: #fff;
-  cursor: pointer;
-  display: inline-block;
-  flex-direction: row;
-  flex-shrink: 0;
-  font-family: Eina01,sans-serif;
-  font-size: 16px;
-  font-weight: 800;
-  justify-content: center;
-  line-height: 24px;
-  margin: 0;
-  min-height: 64px;
-  outline: none;
-  overflow: visible;
-  padding: 19px 26px;
-  pointer-events: auto;
-  position: relative;
-  text-align: center;
-  text-decoration: none;
-  text-transform: none;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-  vertical-align: middle;
-  width: auto;
-  word-break: keep-all;
-  z-index: 0;
-}
 
-@media (min-width: 768px) {
-  .btn-primary {
-    padding: 19px 32px;
+  &:hover {
+    background-color: $color-accent-hover;
+    border-color: $color-accent-hover;
+  }
+
+  &:active {
+    background-color: $color-accent-active;
+    border-color: $color-accent-active;
+  }
+
+  &:focus {
+    outline: 3px solid lighten($color-accent, 35%);
+    outline-offset: 2px;
   }
 }
 
-.btn-primary:before,
-.btn-primary:after {
-  border-radius: 80px;
-}
-
-.btn-primary:before {
-  background-color: rgba(249, 58, 19, .32);
-  content: "";
-  display: block;
-  height: 100%;
-  left: 0;
-  overflow: hidden;
-  position: absolute;
-  top: 0;
-  width: 100%;
-  z-index: -2;
-}
-
-.btn-primary:after {
-  background-color: initial;
-  background-image: linear-gradient(92.83deg, #ff7426 0, #f93a13 100%);
-  bottom: 4px;
-  content: "";
-  display: block;
-  left: 4px;
-  overflow: hidden;
-  position: absolute;
-  right: 4px;
-  top: 4px;
-  transition: all 100ms ease-out;
-  z-index: -1;
-}
-
-.btn-primary:hover:not(:disabled):after {
-  bottom: 0;
-  left: 0;
-  right: 0;
-  top: 0;
-  transition-timing-function: ease-in;
-}
-
-.btn-primary:active:not(:disabled) {
-  color: #ccc;
-}
-
-.btn-primary:active:not(:disabled):after {
-  background-image: linear-gradient(0deg, rgba(0, 0, 0, .2), rgba(0, 0, 0, .2)), linear-gradient(92.83deg, #ff7426 0, #f93a13 100%);
-  bottom: 4px;
-  left: 4px;
-  right: 4px;
-  top: 4px;
-}
-
-.btn-primary:disabled {
-  cursor: default;
-  opacity: .24;
-}
-
-
-/* Secondary */
+// Secondary button (outlined)
 .btn-secondary {
-  align-items: center;
-  appearance: none;
-  background-clip: padding-box;
-  background-color: initial;
-  background-image: none;
-  border-style: none;
-  box-sizing: border-box;
-  color: #fff;
-  cursor: pointer;
-  display: inline-block;
-  flex-direction: row;
-  flex-shrink: 0;
-  font-family: Eina01,sans-serif;
-  font-size: 16px;
-  font-weight: 800;
-  justify-content: center;
-  line-height: 24px;
-  margin: 0;
-  min-height: 64px;
-  outline: none;
-  overflow: visible;
-  padding: 19px 26px;
-  pointer-events: auto;
-  position: relative;
-  text-align: center;
-  text-decoration: none;
-  text-transform: none;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-  vertical-align: middle;
-  width: auto;
-  word-break: keep-all;
-  z-index: 0;
-}
+  background-color: transparent;
+  border-color: $color-accent;
+  color: $color-accent;
 
-@media (min-width: 768px) {
-  .btn-secondary {
-    padding: 19px 32px;
+  &:hover {
+    background-color: rgba($color-accent, 0.1);
+  }
+
+  &:active {
+    background-color: rgba($color-accent, 0.2);
+  }
+
+  &:focus {
+    outline: 3px solid lighten($color-accent, 35%);
+    outline-offset: 2px;
   }
 }
 
-.btn-secondary:before,
-.btn-secondary:after {
-  border-radius: 80px;
-}
+// Tertiary button (minimal, text-like)
+.btn-tertiary {
+  background-color: transparent;
+  border: none;
+  color: $color-accent;
 
-.btn-secondary:before {
-  background-image: linear-gradient(92.83deg, #ff7426 0, #f93a13 100%);
-  content: "";
-  display: block;
-  height: 100%;
-  left: 0;
-  overflow: hidden;
-  position: absolute;
-  top: 0;
-  width: 100%;
-  z-index: -2;
-}
+  &:hover {
+    text-decoration: underline;
+    background-color: rgba($color-accent, 0.05);
+  }
 
-.btn-secondary:after {
-  background-color: initial;
-  background-image: linear-gradient(#541a0f 0, #0c0d0d 100%);
-  bottom: 4px;
-  content: "";
-  display: block;
-  left: 4px;
-  overflow: hidden;
-  position: absolute;
-  right: 4px;
-  top: 4px;
-  transition: all 100ms ease-out;
-  z-index: -1;
-}
+  &:active {
+    background-color: rgba($color-accent, 0.1);
+  }
 
-.btn-secondary:hover:not(:disabled):before {
-  background: linear-gradient(92.83deg, rgb(255, 116, 38) 0%, rgb(249, 58, 19) 100%);
-}
-
-.btn-secondary:hover:not(:disabled):after {
-  bottom: 0;
-  left: 0;
-  right: 0;
-  top: 0;
-  transition-timing-function: ease-in;
-  opacity: 0;
-}
-
-.btn-secondary:active:not(:disabled) {
-  color: #ccc;
-}
-
-.btn-secondary:active:not(:disabled):before {
-  background-image: linear-gradient(0deg, rgba(0, 0, 0, .2), rgba(0, 0, 0, .2)), linear-gradient(92.83deg, #ff7426 0, #f93a13 100%);
-}
-
-.btn-secondary:active:not(:disabled):after {
-  background-image: linear-gradient(#541a0f 0, #0c0d0d 100%);
-  bottom: 4px;
-  left: 4px;
-  right: 4px;
-  top: 4px;
-}
-
-.btn-secondary:disabled {
-  cursor: default;
-  opacity: .24;
+  &:focus {
+    outline: 3px solid lighten($color-accent, 35%);
+    outline-offset: 2px;
+  }
 }

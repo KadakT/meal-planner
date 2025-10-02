@@ -9,6 +9,10 @@ export enum SessionKeys {
     Token = 'token'
 }
 
+export const TOKEN_TTL = {
+    REMEMBER_ME: 7 * 24 * 60 * 60 * 1000  // 7 days
+} 
+
 export interface CookieEntry {
     name: CookieKeys;
     value: string | null;

@@ -1,36 +1,89 @@
 /* Variables for theme mixin */
-$color-primary: #7c3aed;
-$color-primary-2: #4a0c6d;
+// COLOURS
+$color-accent: #22a525;
+$color-accent-2: #4a0c6d;
 $color-highlight: #fde047;
-
-$color-background-light: #f5f6fa;
-$color-background-dark: #151515;
-$color-background-card-light: #ffffff;
-$color-background-card-dark: #1e1e1e;
-
-$color-text-primary-light: 	#1e1e1e;
-$color-text-primary-dark: #ffffff;
-$color-text-secondary-light: 	#6b7280;
-$color-text-secondary-dark: #cccccc;
-
-$color-border-muted-light: 	#e5e7eb;
-$color-border-muted-dark: #2a2a2a;
-
 
 $color-white: #ffffff;
 $color-themedark-base-900: #121212;
 $color-green-toggle: green;
 $color-themelight-base-500: grey;
 
+//BACKGROUNDS
+$color-background-light:  #FAFAFA;
+$color-background-dark: #121212;
+$color-background-card-light: #ffffff;
+$color-background-card-dark: #1E1E1E;
+
+//TEXT COLOURS
+$color-text: #212529;
+$color-text-primary-light: 	#212529;
+$color-text-primary-dark: #F8F9FA;
+$color-text-secondary-light: 	#6b7280;
+$color-text-secondary-dark: #cccccc;
+$color-text-muted-light: #6C757D;
+$color-text-muted-dark: #B0B0B0;
+
+//border
+$color-border-muted-light: 	#e5e7eb;
+$color-border-muted-dark: #2a2a2a;
+$color-border: #ccc;
+$color-input-border-light: #D0D7DE;
+$color-input-border-dark: #3A3A3A;
+$color-input-border-hover-light: #A8B0B8;
+$color-input-border-hover-dark: #5A5A5A;
+
+//LINKS BUTTONS
+$color-accent-hover: darken($color-accent, 8%);
+$color-accent-active: darken($color-accent, 15%);
+$color-accent-hover-dark: darken($color-accent, 10%);
+$color-accent-active-dark: darken($color-accent, 20%);
+$color-accent-visited: #6a1b9a;
+
+//FORMS
+$color-input-bg-light: #FFFFFF; 
+$color-input-bg-dark: #2C2C2C;
+
+//ERRORS
+$color-error-light: #dc3545;   
+$color-error-dark: #ff6b6b; 
+$color-error-border-light: #f5c2c7;
+$color-error-border-dark: #842029;
+$color-error-text-light: #842029;
+$color-error-text-dark: #ffb3b8;
+
+$radius-pill: 500px;
+
+$font-famaly-dafault:'Nunito', 'Segoe UI', sans-serif;
+$font-famaly-logo: 'Baloo 2';
+
+$cards-radius: 4px;
+
 $box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+
+$displacement:  3px; 
 
 $themes: (
   light: (
     backgroundColor: $color-background-light,
+    backgroundColorCards: $color-background-card-light,
+    backgroundColorInput: $color-input-bg-light,
     textPrimary: $color-text-primary-light,
+    borderInput: $color-input-border-light,
+    borderInputHover: $color-input-border-hover-light,
+    colorError: $color-error-light,
+    colorErrorBorder: $color-error-border-light,
+    colorErrorText: $color-error-text-light,
   ),
   dark: (
     backgroundColor: $color-background-dark,
+    backgroundColorCards: $color-background-card-dark,
+    backgroundColorInput: $color-input-bg-dark,
     textPrimary: $color-text-primary-dark,
+    borderInput: $color-input-border-dark,
+    borderInputHover: $color-input-border-hover-dark,
+    colorError: $color-error-dark,
+    colorErrorBorder: $color-error-border-dark,
+    colorErrorText: $color-error-text-dark,
   )
 );
