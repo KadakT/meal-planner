@@ -1,19 +1,17 @@
 /* You can add global styles to this file, and also import other style files */
-@import 'normalize.css/normalize.css';
+@use 'normalize.css/normalize.css';
 
-@import 'scss/abstracts/functions';
-@import 'scss/abstracts/mixins';
-@import 'scss/abstracts/variables';
+@use 'scss/base/general';
+@use 'scss/base/typography';
+@use 'scss/base/animation';
 
-@import 'scss/base/general';
-@import 'scss/base/typography';
-@import 'scss/base/animation';
+@use 'scss/componends/theme-switch';
+@use 'scss/componends/btns';
+@use 'scss/componends/form';
+@use 'scss/componends/logo';
+@use 'scss/componends/links';
+@use 'scss/componends/auth-form';
 
-@import 'scss/componends/theme-switch';
-@import 'scss/componends/btns';
-@import 'scss/componends/form';
-@import 'scss/componends/logo';
-@import 'scss/componends/links';
-@import 'scss/componends/auth-form';
+@use 'scss/layout/base-layout';
 
-@import 'scss/pages/login';
+@use 'scss/pages/login';

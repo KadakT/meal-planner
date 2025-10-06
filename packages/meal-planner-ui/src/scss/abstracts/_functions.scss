@@ -1,3 +1,6 @@
+@use "sass:map";
+@use './mixins' as *;
+
 @function getValue($key) {
-    @return map-get($array-map, $key);
-  }
+    @return map.get($array-map, $key);
+}

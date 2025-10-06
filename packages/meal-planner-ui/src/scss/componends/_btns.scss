@@ -1,3 +1,6 @@
+@use '../abstracts' as *;
+@use "sass:color";
+
 // Base button
 .btn {
   display: inline-block;
@@ -45,7 +48,7 @@
   }
 
   &:focus {
-    outline: 3px solid lighten($color-accent, 35%);
+    outline: 3px solid color.scale($color-accent, $lightness: 35%);
     outline-offset: 2px;
   }
 }
@@ -65,7 +68,7 @@
   }
 
   &:focus {
-    outline: 3px solid lighten($color-accent, 35%);
+    outline: 3px solid color.scale($color-accent, $lightness: 35%);
     outline-offset: 2px;
   }
 }
@@ -86,7 +89,7 @@
   }
 
   &:focus {
-    outline: 3px solid lighten($color-accent, 35%);
+    outline: 3px solid color.scale($color-accent, $lightness: 35%);
     outline-offset: 2px;
   }
 }

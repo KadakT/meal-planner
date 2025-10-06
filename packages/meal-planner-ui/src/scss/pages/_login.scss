@@ -1,3 +1,5 @@
+@use '../abstracts' as *;
+
 .login {
 	display: flex;
 	align-items: center;
@@ -16,17 +18,22 @@
 		box-shadow: $box-shadow;
 		border-radius: $cards-radius;
 		overflow: hidden;
+		flex-direction: column;
+		@include respond(big-phone){
+			flex-direction: row;
+		}
 	}
 
 	&__welcome-container {
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		// background-color: $color-background-card-dark;
-		width: 50%;
-
+		width: 100%;
 		@include themes() {
 			background-color: getValue(backgroundColor);
+		}
+		@include respond(big-phone){
+			width: 50%;
 		}
 	}
 
@@ -38,11 +45,16 @@
 	// .login__sign-in
 	&__sign-in {
 		padding: 2rem 2rem 4rem 1rem;
-		width: 50%;
+		width: 100%;
 		flex: 1;
-
+		display: flex;
+		flex-direction: column;
+		align-items: center;
 		@include themes() {
 			background-color: getValue(backgroundColorCards);
+		}
+		@include respond(big-phone){
+			width: 50%;
 		}
 	}
 	h2, form{

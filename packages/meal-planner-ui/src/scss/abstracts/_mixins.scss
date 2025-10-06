@@ -1,3 +1,6 @@
+@use "sass:map";
+@use './variables' as *;
+
 /* Breakpoints  (The mobile first approach)*/
 /* How to use it:
   for example:
@@ -54,8 +57,8 @@
       .#{$theme} & {
         $array-map: () !global;
         @each $key, $submap in $map {
-          $value: map-get(map-get($array, $theme), '#{$key}');
-          $array-map: map-merge(
+          $value: map.get(map.get($array, $theme), '#{$key}');
+          $array-map: map.merge(
             $array-map,
             (
               $key: $value

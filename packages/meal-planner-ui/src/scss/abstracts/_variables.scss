@@ -1,3 +1,5 @@
+@use "sass:color";
+
 /* Variables for theme mixin */
 // COLOURS
 $color-accent: #22a525;
@@ -34,10 +36,10 @@ $color-input-border-hover-light: #A8B0B8;
 $color-input-border-hover-dark: #5A5A5A;
 
 //LINKS BUTTONS
-$color-accent-hover: darken($color-accent, 8%);
-$color-accent-active: darken($color-accent, 15%);
-$color-accent-hover-dark: darken($color-accent, 10%);
-$color-accent-active-dark: darken($color-accent, 20%);
+$color-accent-hover: color.scale($color-accent, $lightness: -8%);
+$color-accent-active: color.scale($color-accent, $lightness: -15%);
+$color-accent-hover-dark: color.scale($color-accent, $lightness: -10%);
+$color-accent-active-dark: color.scale($color-accent, $lightness: -20%);
 $color-accent-visited: #6a1b9a;
 
 //FORMS

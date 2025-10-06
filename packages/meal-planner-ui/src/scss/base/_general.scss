@@ -1,3 +1,6 @@
+@use '../abstracts' as *;
+@use "sass:color";
+
 /* 1. Use a natural box layout */
 *,
 *::before,
@@ -60,7 +63,7 @@ main{
 //FOCUS Global
 // Apply focus outline to all focusable elements
 :focus {
-  outline: 3px solid lighten($color-accent, 35%);
+  outline: 3px solid color.scale($color-accent, $lightness: 35%);
   outline-offset: 2px;
 }
 

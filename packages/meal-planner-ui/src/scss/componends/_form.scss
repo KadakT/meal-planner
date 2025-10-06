@@ -1,3 +1,4 @@
+@use '../abstracts' as *;
 // Autofill fix (Chrome, Safari, Edge - WebKit browsers)
 input:-webkit-autofill,
 input:-webkit-autofill:hover,

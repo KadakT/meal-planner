@@ -1,11 +1,10 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { Router, RouterOutlet } from '@angular/router';
+import { RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { CookieKeys } from './shared/definitions';
-import { StorageService } from './core/services';
+import { AuthService, StorageService } from './core/services';
 import { activateTheme } from './shared/utils';
 import { TranslateService, TranslateModule} from "@ngx-translate/core";
-import { HttpClient } from '@angular/common/http';
 import { FooterComponent, HeaderComponent, SidebarComponent } from './layout';
 
 @Component({
@@ -22,26 +21,23 @@ import { FooterComponent, HeaderComponent, SidebarComponent } from './layout';
   styleUrl: './app.component.scss'
 })
 export class AppComponent implements OnInit{
-   private http = inject(HttpClient);
-
   private translate = inject(TranslateService);
-   private storageService = inject(StorageService)
+  private storageService = inject(StorageService);
+  private authService = inject(AuthService)
+
+  isLoggedIn$ = this.authService.isLoggedIn$;
    
   title = 'lerning';
   appLanguage = 'en';
-  private router = inject(Router);
 
   constructor() {
-  this.translate.setFallbackLang('en');
-  this.translate.use('en');
-}
+    this.translate.setFallbackLang('en');
+    this.translate.use('en');
+  }
 
 
   ngOnInit(){
-    this.setTheme();
-    this.router.events.subscribe(event => {
-      console.log(event);
-    });
+    this.setTheme();  
   }
 
   setTheme = () => {
