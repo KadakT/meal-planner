@@ -1,10 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { ApiError, AuthResponse, LoginPayload } from '@meal-planner/shared';
-import { AuthService, StorageService } from 'app/core/services';
+import { AuthService } from 'app/core/services';
 import { AuthFormComponent } from '@components/index';
 import { ButtonsComponent } from "../../shared/components/buttons/buttons.component";
-import { 
-  Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { FormGroup } from '@angular/forms';
 @Component({
@@ -20,7 +18,6 @@ import { FormGroup } from '@angular/forms';
                           <img src="assets/svg/logo.svg" width="100" alt="Meal Planner Logo">
                           <h1>Meal Planner</h1>
                       </div>                      
-                      <p></p>
                   </div>
           </div>
           <div class="login__sign-in">
@@ -38,10 +35,8 @@ import { FormGroup } from '@angular/forms';
 
 
 export class LoginComponent {
-  private storageService = inject(StorageService);
   private authService = inject(AuthService);
   private router = inject(Router);
-  private destroy$ = new Subject<void>();
 
   public isLogin: boolean = true;
   public loading: boolean = false;

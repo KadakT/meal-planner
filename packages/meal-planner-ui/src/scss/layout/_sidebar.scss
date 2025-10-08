@@ -1,0 +1,30 @@
+@use '../abstracts' as *;
+
+.sidebar{
+    height: 100%;
+    nav{
+        height: 100%;
+    }
+
+    ul{
+        padding: 0;
+        margin: 0;
+        list-style: none;
+    }
+
+    &__item{
+        display: block;
+        padding: 0.75rem 1rem;
+        text-decoration: none;
+        border-radius: $cards-radius;
+    }
+    &__item:hover {
+      background-color: rgba(34, 165, 37, 0.1);
+      color: $color-accent;
+    }
+
+    &__item.active {
+      background-color: rgba(34, 165, 37, 0.15);
+      color: $color-accent;
+    }
+}

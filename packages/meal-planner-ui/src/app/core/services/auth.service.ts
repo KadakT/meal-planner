@@ -23,7 +23,12 @@ export class AuthService {
 
   isLoggedIn$ = this.loggedIn.asObservable();
 
-
+  constructor(){
+    const token = this.tokenService.getToken();
+    if (token){
+      this.loggedIn.next(true);
+    }
+  }
 
   login(credentials: LoginPayload): Observable<AuthResponse> {
     this.loadingService.setLoading(true);

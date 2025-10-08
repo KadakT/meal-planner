@@ -42,22 +42,15 @@ input, button, textarea, select {
   }
 }
 
-html{
-    height: 100vh;
-    width: 100vw;
-}
 body{
     font-family: "Helvetica", Sans-Serif;
     background: url("./../../../public/assets/images/background-image.jpg") no-repeat center center fixed;
     background-size: cover;
-    height: 100%;
-    width: 100%;
     margin: 0;
     padding: 0;
-}
-
-main{
-    height: 100%;
+    @include themes(){
+      color: getValue(textPrimary);
+    }
 }
 
 //FOCUS Global

@@ -1,11 +1,11 @@
 import { Component, inject } from '@angular/core';
-import { ButtonsComponent } from '@components/index';
+import { ButtonsComponent, ThemeSwitchComponent } from '@components/index';
 import { AuthService } from 'app/core/services';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [ ButtonsComponent ],
+  imports: [ ButtonsComponent, ThemeSwitchComponent ],
   templateUrl: './header.component.html'
 })
 export class HeaderComponent {

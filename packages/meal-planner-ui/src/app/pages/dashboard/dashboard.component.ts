@@ -1,16 +1,11 @@
 import { Component } from '@angular/core';
-import { FooterComponent } from "../../layout/footer/footer.component";
-import { RouterLink, RouterOutlet } from '@angular/router';
-import { HeaderComponent } from 'app/layout/header/header.component';
+import { RouterOutlet } from '@angular/router';
+
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [ 
-            RouterOutlet, 
-            RouterLink, 
-            FooterComponent, 
-            HeaderComponent],
+  imports: [ RouterOutlet ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })

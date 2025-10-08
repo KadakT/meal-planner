@@ -4,6 +4,7 @@
 @use 'scss/base/general';
 @use 'scss/base/typography';
 @use 'scss/base/animation';
+@use 'scss/base/helpers';
 
 @use 'scss/componends/theme-switch';
 @use 'scss/componends/btns';
@@ -13,5 +14,7 @@
 @use 'scss/componends/auth-form';
 
 @use 'scss/layout/base-layout';
+@use 'scss/layout/header';
+@use 'scss/layout/sidebar';
 
 @use 'scss/pages/login';

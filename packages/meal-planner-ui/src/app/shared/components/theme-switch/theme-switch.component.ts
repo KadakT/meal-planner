@@ -3,11 +3,12 @@ import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { StorageService } from '../../../core/services';
 import { CookieKeys } from '../../definitions';
 import { activateTheme } from './../../utils';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-theme-switch',
   standalone: true,
-  imports:  [ ReactiveFormsModule ],
+  imports:  [ ReactiveFormsModule, TranslateModule ],
   templateUrl: './theme-switch.component.html'
 })
 export class ThemeSwitchComponent {

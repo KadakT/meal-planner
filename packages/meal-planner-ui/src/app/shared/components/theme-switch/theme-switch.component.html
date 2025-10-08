@@ -1,6 +1,6 @@
 <form [formGroup]="themeSwitch">
     <fieldset class="theme-radio-switch">
-      <!-- <legend class="visually-hidden">{{ 'common.header.theme' | translate }}</legend> -->
+      <legend class="visually-hidden">{{ 'common.header.theme' | translate }}</legend>
       <input
         type="radio"
         name="theme"
@@ -12,14 +12,12 @@
         (keyup)="toggleClassName($event)"
         (keydown)="toggleClassName($event)"
       />
-          <!-- [attr.aria-label]="'common.accessibility.labels.light_theme' | translate" -->
       <label
         for="theme-light-radio"
         class="theme-radio-switch__label theme-radio-switch__label--1"
-       
-    
+       [attr.aria-label]="'common.accessibility.labels.light_theme' | translate"    
       >
-        <!-- <span class="visually-hidden">{{ 'common.accessibility.labels.light_theme' | translate }}</span> -->
+        <span class="visually-hidden">{{ 'common.accessibility.labels.light_theme' | translate }}</span>
       </label>
 
       <input
@@ -33,13 +31,13 @@
         (keyup)="toggleClassName($event)"
         (keydown)="toggleClassName($event)"
       />
-       <!-- [attr.aria-label]="'common.accessibility.labels.dark_theme' | translate" -->
       <label
         for="theme-dark-radio"
         class="theme-radio-switch__label theme-radio-switch__label--2"
+        [attr.aria-label]="'common.accessibility.labels.dark_theme' | translate"
        
       >
-        <!-- <span class="visually-hidden">{{ 'common.accessibility.labels.dark_theme' | translate }}</span> -->
+        <span class="visually-hidden">{{ 'common.accessibility.labels.dark_theme' | translate }}</span>
       </label>
     </fieldset>
   </form>

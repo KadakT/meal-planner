@@ -1,12 +1,12 @@
-import { Component, NgModule } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { ThemeSwitchComponent } from '../../shared/components/theme-switch/theme-switch.component';
+import { Component } from '@angular/core';
+
 
 @Component({
   selector: 'app-footer',
   standalone: true,
-  imports: [ ThemeSwitchComponent ],
-  templateUrl: './footer.component.html'
+   template: `
+  <footer> Built by <a href="#" class="footer__link">Tatjna Kadak</a>. Copyright &copy; by Tatjana Kadak. </footer>
+  `
 })
 export class FooterComponent {
  

@@ -3,7 +3,7 @@ import { FormGroup } from "@angular/forms";
 import { Router } from "@angular/router";
 import { AuthFormComponent, ButtonsComponent } from "@components/index";
 import { ApiError, AuthResponse, LoginPayload } from "@meal-planner/shared";
-import { AuthService, StorageService } from "app/core/services";
+import { AuthService } from "app/core/services";
 
 @Component({
     selector: 'app-register',
@@ -18,7 +18,6 @@ import { AuthService, StorageService } from "app/core/services";
                           <img src="assets/svg/logo.svg" width="100" alt="Meal Planner Logo">
                           <h1>Meal Planner</h1>
                       </div>
-                    <p></p>
                 </div>
             </div>
             <div class="login__sign-in">
