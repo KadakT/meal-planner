@@ -1,9 +1,21 @@
+export interface User{
+    id: string;
+    email: string;
+    name: string;
+}
+
 export interface LoginPayload {
-  username: string;
+  email: string;
   password: string;
+  rememberMe: boolean;
+}
+
+export interface RegisterPayload extends LoginPayload {
+  name: string;
 }
 
 export interface AuthResponse {
+  user: User;
   token: string;
   message?: string;
 }

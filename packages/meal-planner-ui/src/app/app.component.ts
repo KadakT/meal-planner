@@ -2,10 +2,13 @@ import { Component, inject, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { CookieKeys } from './shared/definitions';
-import { AuthService, StorageService } from './core/services';
+import { StorageService } from './core/services';
 import { activateTheme } from './shared/utils';
 import { TranslateService, TranslateModule} from "@ngx-translate/core";
 import { FooterComponent, HeaderComponent, SidebarComponent } from './layout';
+import { Store } from '@ngrx/store';
+import { selectIsAuthenticate } from './features/auth/auth.selector';
+import { AuthActions } from './features/auth/auth.actions';
 
 @Component({
   selector: 'app-root',
@@ -23,9 +26,9 @@ import { FooterComponent, HeaderComponent, SidebarComponent } from './layout';
 export class AppComponent implements OnInit{
   private translate = inject(TranslateService);
   private storageService = inject(StorageService);
-  private authService = inject(AuthService)
+  private store = inject(Store);
 
-  isLoggedIn$ = this.authService.isLoggedIn$;
+  isLoggedIn$ = this.store.select(selectIsAuthenticate);
    
   title = 'lerning';
   appLanguage = 'en';
@@ -37,6 +40,7 @@ export class AppComponent implements OnInit{
 
 
   ngOnInit(){
+    this.store.dispatch(AuthActions.autoLogin());
     this.setTheme();  
   }
 

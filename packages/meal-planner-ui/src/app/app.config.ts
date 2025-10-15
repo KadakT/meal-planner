@@ -7,6 +7,10 @@ import { HttpClientModule, provideHttpClient, withInterceptors } from "@angular/
 import { environment } from './../environments/environment';
 import { routes } from './app.routes';
 import { authInterceptor } from './core/interceptors/auth.interceptor';
+import { provideStore } from '@ngrx/store';
+import { authReducer } from './features/auth/auth.reducer';
+import { provideEffects } from '@ngrx/effects';
+import { AuthEffects } from './features/auth/auth.effects';
 
 console.log('appConfig providers applied');
 export const appConfig: ApplicationConfig = {
@@ -15,17 +19,17 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     importProvidersFrom(HttpClientModule),
     provideTranslateService({
-      loader: provideTranslateHttpLoader({
-        prefix: environment.translationPath,
-        suffix: '.json'
-      }),
-      fallbackLang: 'en',
-      lang: 'en'
+        loader: provideTranslateHttpLoader({
+            prefix: environment.translationPath,
+            suffix: '.json'
+        }),
+        fallbackLang: 'en',
+        lang: 'en'
     }),
-    provideHttpClient(
-      withInterceptors([authInterceptor])
-    )
-  ]
+    provideHttpClient(withInterceptors([authInterceptor])),
+    provideEffects([AuthEffects]),
+    provideStore({ auth: authReducer })
+]
 };
 
 

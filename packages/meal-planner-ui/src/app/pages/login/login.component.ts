@@ -1,10 +1,12 @@
 import { Component, inject } from '@angular/core';
-import { ApiError, AuthResponse, LoginPayload } from '@meal-planner/shared';
-import { AuthService } from 'app/core/services';
+import { LoginPayload } from '@meal-planner/shared';
 import { AuthFormComponent } from '@components/index';
 import { ButtonsComponent } from "../../shared/components/buttons/buttons.component";
 import { Router } from '@angular/router';
 import { FormGroup } from '@angular/forms';
+import { Store } from '@ngrx/store';
+import { AuthActions } from 'app/features/auth/auth.actions';
+
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -22,7 +24,7 @@ import { FormGroup } from '@angular/forms';
           </div>
           <div class="login__sign-in">
                   <p>{{ errorMessage }}</p>
-                  <app-auth-form [isLogin]="isLogin" (onSubmitCredentials)="formSubmitted($event)">
+                  <app-auth-form [mode]="'login'" (onSubmitCredentials)="formSubmitted($event)">
                       <h2>Member Login</h2>
                       <app-buttons [btnClass]="'btn btn-primary'" [btnType]="'submit'">Login</app-buttons>
                   </app-auth-form>
@@ -35,29 +37,25 @@ import { FormGroup } from '@angular/forms';
 
 
 export class LoginComponent {
-  private authService = inject(AuthService);
   private router = inject(Router);
+  private store = inject(Store)
 
   public isLogin: boolean = true;
   public loading: boolean = false;
   public errorMessage: string = '';
 
   formSubmitted(event : FormGroup){
-   const {username, password}: LoginPayload = {
-    username: event.get('username')?.value,
-    password: event.get('password')?.value
+   const {email, password, rememberMe}: LoginPayload = {
+    email: event.get('email')?.value,
+    password: event.get('password')?.value,
+    rememberMe: event.get('rememberMe')?.value || false
    }
-   const rememberMe = event.get('rememberMe')?.value || null;
-   this.login({username, password}, rememberMe);
+   this.login({email, password, rememberMe}, );
   }
 
   login(credentials : LoginPayload, rememberMe: boolean = false){
-    this.authService.login(credentials).subscribe({
-      next: (res: AuthResponse) => this.authService.handleSuccessfulLogin(res.token, rememberMe),
-      error: (err: ApiError) => {
-        this.errorMessage = err.message;
-      }
-    });
+    event?.preventDefault();
+    this.store.dispatch(AuthActions.loginStart({email: credentials.email, password: credentials.password, rememberMe}));
   }
 
   switchForm(){

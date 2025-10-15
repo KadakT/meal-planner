@@ -50,5 +50,13 @@
   "MISSING_FIELDS": {
     "message": "Please fill in all required fields.",
     "statusCode": 400
+  },
+  "EMAIL_NAME_AND_PASSWORD_REQUIRED": {
+    "message": "Email, name and password are required.",
+    "statusCode": 400
+  },
+  "USER_EXISTS": {
+     "message": "A user with the same e-mail already exist.",
+    "statusCode": 409
   }
 }

@@ -1,6 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { ButtonsComponent, ThemeSwitchComponent } from '@components/index';
+import { Store } from '@ngrx/store';
 import { AuthService } from 'app/core/services';
+import { AuthActions } from 'app/features/auth/auth.actions';
 
 @Component({
   selector: 'app-header',
@@ -9,9 +11,9 @@ import { AuthService } from 'app/core/services';
   templateUrl: './header.component.html'
 })
 export class HeaderComponent {
-  private authService = inject(AuthService);
+  private store = inject(Store);
 
   logOut(){
-    this.authService.logout();
+    this.store.dispatch(AuthActions.logout());
   }
 }

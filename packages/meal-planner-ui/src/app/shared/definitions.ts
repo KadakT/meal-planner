@@ -6,7 +6,8 @@ export enum CookieKeys {
 export enum SessionKeys {
     Language = 'land',
     SessionId = 'sessionId',
-    Token = 'token'
+    Token = 'token',
+    AuthData = 'authData'
 }
 
 export const TOKEN_TTL = {
