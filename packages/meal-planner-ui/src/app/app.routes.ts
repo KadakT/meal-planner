@@ -4,7 +4,7 @@ import { AuthGuard } from './core/guards/auth.guard';
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'dashboard',
+    redirectTo: '',
     pathMatch: 'full'
   },
   {
@@ -16,7 +16,7 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/register/register.component').then(m => m.RegisterComponent)
   },
   {
-    path: 'dashboard',
+    path: '',
     loadComponent: () => import('./pages/dashboard/dashboard.component').then(m => m.DashboardComponent),
     canActivate: [AuthGuard],
     children: [
@@ -31,12 +31,15 @@ export const routes: Routes = [
       },
       {
         path: 'recipes',
-        loadComponent: () => import('./pages/dashboard/recipes/recipes.component').then(m => m.RecipesComponent)
+        loadChildren: () =>
+          import('./features/recipes/recipes.routes').then(
+            (m) => m.RECIPES_ROUTES
+          ),
       },
       {
         path: 'settings',
         loadComponent: () => import('./pages/dashboard/settings/settings.component').then(m => m.SettingsComponent)
-      }
+      },
     ]
   }
 ];

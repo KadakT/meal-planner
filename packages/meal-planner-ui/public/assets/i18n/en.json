@@ -1,3 +1,7 @@
 {
-  "HELLO": "Hello World"
+  "PAGES": {
+    "RECIPES_LIST": {
+      "TITLE": "Recipes"
+    }
+  }
 }

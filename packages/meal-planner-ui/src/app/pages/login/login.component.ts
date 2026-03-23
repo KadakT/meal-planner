@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { LoginPayload } from '@meal-planner/shared';
 import { AuthFormComponent } from '@components/index';
-import { ButtonsComponent } from "../../shared/components/buttons/buttons.component";
+import { ButtonsComponent } from "../../shared/ui/button/buttons.component";
 import { Router } from '@angular/router';
 import { FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
@@ -26,7 +26,7 @@ import { AuthActions } from 'app/features/auth/auth.actions';
                   <p>{{ errorMessage }}</p>
                   <app-auth-form [mode]="'login'" (onSubmitCredentials)="formSubmitted($event)">
                       <h2>Member Login</h2>
-                      <app-buttons [btnClass]="'btn btn-primary'" [btnType]="'submit'">Login</app-buttons>
+                      <app-buttons variant="secondary" [btnType]="'submit'">Login</app-buttons>
                   </app-auth-form>
                       <p>New Here? <a (click)="switchForm()"  tabindex="0">Create an Account</a></p>
           </div>

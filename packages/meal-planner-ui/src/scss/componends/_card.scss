@@ -1,0 +1,9 @@
+@use '../abstracts' as *;
+@use "sass:color";
+.card {
+    display: flex;
+   @include themes() {
+    background-color: getValue(backgroundColorCards);
+    color: getValue(textPrimary);
+   }
+}
