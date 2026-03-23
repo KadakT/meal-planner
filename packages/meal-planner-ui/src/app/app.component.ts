@@ -1,9 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { CookieKeys } from './shared/definitions';
-import { StorageService } from './core/services';
-import { activateTheme } from './shared/utils';
 import { TranslateService, TranslateModule} from "@ngx-translate/core";
 import { FooterComponent, HeaderComponent, SidebarComponent } from './layout';
 import { Store } from '@ngrx/store';
@@ -25,7 +22,6 @@ import { AuthActions } from './features/auth/auth.actions';
 })
 export class AppComponent implements OnInit{
   private translate = inject(TranslateService);
-  private storageService = inject(StorageService);
   private store = inject(Store);
 
   isLoggedIn$ = this.store.select(selectIsAuthenticate);
@@ -41,16 +37,5 @@ export class AppComponent implements OnInit{
 
   ngOnInit(){
     this.store.dispatch(AuthActions.autoLogin());
-    this.setTheme();  
   }
-
-  setTheme = () => {
-    if (document.body.classList) {
-      activateTheme(this.storageService.getCookie(CookieKeys.Theme, 'dark'));
-      if (!this.storageService.getCookie(CookieKeys.Theme)) {
-        this.storageService.setCookie(CookieKeys.Theme, 'dark');
-      }
-    }
-  };
-
 }

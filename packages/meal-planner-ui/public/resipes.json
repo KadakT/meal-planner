@@ -1,0 +1,63 @@
+[
+  {
+    "id": "rec-001",
+    "name": "Creamy Chicken Pasta",
+    "ingredients": [
+      { "name": "Chicken breast", "amount": 400, "unit": "g" },
+      { "name": "Pasta", "amount": 250, "unit": "g" },
+      { "name": "Heavy cream", "amount": 200, "unit": "ml" },
+      { "name": "Garlic", "amount": 2, "unit": "cloves" },
+      { "name": "Parmesan", "amount": 50, "unit": "g" }
+    ],
+    "instruction": "Cook pasta according to package instructions. Fry chicken with garlic until golden. Add cream and simmer. Mix with pasta and top with parmesan.",
+    "category": "Dinner",
+    "imageUrl": "https://picsum.photos/400/300?random=1",
+    "createdAt": "2025-01-15T10:30:00.000Z",
+    "notes": "Can be made lighter with cooking cream."
+  },
+  {
+    "id": "rec-002",
+    "name": "Avocado Toast with Egg",
+    "ingredients": [
+      { "name": "Bread", "amount": 2, "unit": "slices" },
+      { "name": "Avocado", "amount": 1, "unit": "pcs" },
+      { "name": "Eggs", "amount": 2, "unit": "pcs" },
+      { "name": "Lemon juice", "amount": 1, "unit": "tbsp" },
+      { "name": "Salt", "amount": 1, "unit": "pinch" }
+    ],
+    "instruction": "Toast bread. Mash avocado with lemon juice and salt. Fry or poach eggs. Assemble toast and serve immediately.",
+    "category": "Breakfast",
+    "imageUrl": "https://picsum.photos/400/300?random=2",
+    "createdAt": "2025-01-18T08:00:00.000Z"
+  },
+  {
+    "id": "rec-003",
+    "name": "Vegetable Stir Fry",
+    "ingredients": [
+      { "name": "Bell pepper", "amount": 1, "unit": "pcs" },
+      { "name": "Broccoli", "amount": 200, "unit": "g" },
+      { "name": "Carrot", "amount": 1, "unit": "pcs" },
+      { "name": "Soy sauce", "amount": 3, "unit": "tbsp" },
+      { "name": "Olive oil", "amount": 2, "unit": "tbsp" }
+    ],
+    "instruction": "Heat oil in a pan. Add vegetables and stir fry on high heat. Add soy sauce and cook for another 2–3 minutes.",
+    "category": "Lunch",
+    "imageUrl": "https://picsum.photos/400/300?random=3",
+    "createdAt": "2025-01-20T12:15:00.000Z",
+    "notes": "Works well with tofu or rice."
+  },
+  {
+    "id": "rec-004",
+    "name": "Chocolate Banana Smoothie",
+    "ingredients": [
+      { "name": "Banana", "amount": 2, "unit": "pcs" },
+      { "name": "Milk", "amount": 300, "unit": "ml" },
+      { "name": "Cocoa powder", "amount": 1, "unit": "tbsp" },
+      { "name": "Honey", "amount": 1, "unit": "tbsp" }
+    ],
+    "instruction": "Blend all ingredients until smooth. Serve chilled.",
+    "category": "Snack",
+    "imageUrl": "https://picsum.photos/400/300?random=4",
+    "createdAt": "2025-01-22T16:45:00.000Z"
+  }
+]

@@ -1,13 +1,14 @@
 <form [formGroup]="themeSwitch">
     <fieldset class="theme-radio-switch">
       <legend class="visually-hidden">{{ 'common.header.theme' | translate }}</legend>
+       <!-- (change)="setTheme('light')" -->
       <input
         type="radio"
         name="theme"
         id="theme-light-radio"
         formControlName="theme"
         class="theme-radio-switch__input theme-radio-switch__input--1"
-        (change)="setTheme('light')"
+        (change)="appStore.changeTheme()"
         value="light"
         (keyup)="toggleClassName($event)"
         (keydown)="toggleClassName($event)"
@@ -26,7 +27,7 @@
         formControlName="theme"
         id="theme-dark-radio"
         class="theme-radio-switch__input theme-radio-switch__input--2"
-        (change)="setTheme('dark')"
+        (change)="appStore.changeTheme()"
         value="dark"
         (keyup)="toggleClassName($event)"
         (keydown)="toggleClassName($event)"

@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { StorageService } from '../../../core/services';
 import { CookieKeys } from '../../definitions';
 import { activateTheme } from './../../utils';
 import { TranslateModule } from '@ngx-translate/core';
+import { AppStore } from 'app/store/app.store';
 
 @Component({
   selector: 'app-theme-switch',
@@ -12,6 +13,7 @@ import { TranslateModule } from '@ngx-translate/core';
   templateUrl: './theme-switch.component.html'
 })
 export class ThemeSwitchComponent {
+   readonly appStore = inject(AppStore);
   themeSwitch;
   activeTheme: string = '';
   focusedInput: boolean = false;
@@ -21,19 +23,6 @@ export class ThemeSwitchComponent {
       theme: ['']
     });
   }
-
-  getActiveTheme = () => {
-    this.activeTheme = this.storageService.getCookie(CookieKeys.Theme, 'light');
-    this.themeSwitch.controls.theme.setValue(this.activeTheme);
-  };
-
-  setTheme = (theme: string) => {
-    console.log(theme);
-    this.storageService.setCookie(CookieKeys.Theme, theme);
-    if (document.body.classList) {
-      activateTheme(theme);
-    }
-  };
 
   toggleClassName(event: Event) {
    // this.focusedInput = event.type == 'keyup';

@@ -1,0 +1,83 @@
+[
+  {
+    "id": "r001",
+    "name": "Creamy Chicken Pasta",
+    "ingredients": [
+      { "name": "Chicken breast", "amount": 400, "unit": "g" },
+      { "name": "Pasta", "amount": 250, "unit": "g" },
+      { "name": "Heavy cream", "amount": 200, "unit": "ml" },
+      { "name": "Garlic", "amount": 2, "unit": "cloves" },
+      { "name": "Parmesan", "amount": 50, "unit": "g" }
+    ],
+    "instruction": "Cook pasta according to package instructions. Fry chicken with garlic until golden. Add cream and simmer. Mix with pasta and top with parmesan.",
+    "category": "Dinner",
+    "imageUrl": "https://picsum.photos/400/300?random=1",
+    "createdAt": "2025-01-15T10:30:00.000Z",
+    "notes": "Can be made lighter with cooking cream."
+  },
+  {
+    "id": "r002",
+    "name": "Oven-Baked Lemon Chicken",
+    "ingredients": [
+      { "id": "i008", "name": "Chicken breasts", "amound": "2", "unit": "" },
+      { "id": "i009", "name": "Olive oil", "amound": "1", "unit": "tbsp" },
+      { "id": "i010", "name": "Lemon juice", "amound": "1", "unit": "" },
+      { "id": "i011", "name": "Garlic clove", "amound": "1", "unit": "" },
+      { "id": "i012", "name": "Paprika", "amound": "0.5", "unit": "tsp" },
+      { "id": "i013", "name": "Salt and pepper", "amound": "", "unit": "to taste" }
+    ],
+    "instruction": "Preheat oven to 200°C. Mix all ingredients, marinate chicken for 15 minutes, then bake for 25 minutes until cooked through.",
+    "category": "Main Course",
+    "imageUrl": "assets/images/recipes/lemon-chicken.jpg",
+    "createdAt": "2025-02-12T12:00:00.000Z"
+  },
+  {
+    "id": "r003",
+    "name": "Banana Oat Pancakes",
+    "ingredients": [
+      { "id": "i014", "name": "Banana", "amound": "1", "unit": "" },
+      { "id": "i015", "name": "Egg", "amound": "1", "unit": "" },
+      { "id": "i016", "name": "Oats", "amound": "0.5", "unit": "cup" },
+      { "id": "i017", "name": "Milk", "amound": "0.25", "unit": "cup" },
+      { "id": "i018", "name": "Baking powder", "amound": "0.5", "unit": "tsp" },
+      { "id": "i019", "name": "Cinnamon", "amound": "pinch", "unit": "" }
+    ],
+    "instruction": "Blend all ingredients until smooth. Fry small pancakes on a non-stick pan until golden on both sides.",
+    "category": "Breakfast",
+    "imageUrl": "assets/images/recipes/banana-pancakes.jpg",
+    "createdAt": "2025-01-25T08:30:00.000Z",
+    "notes": "Can be frozen and reheated — ideal for batch prep."
+  },
+  {
+    "id": "r004",
+    "name": "Vegetable Stir-Fry with Tofu",
+    "ingredients": [
+      { "id": "i020", "name": "Firm tofu", "amound": "150", "unit": "g" },
+      { "id": "i021", "name": "Mixed vegetables (bell pepper, broccoli, carrot)", "amound": "1", "unit": "cup" },
+      { "id": "i022", "name": "Soy sauce", "amound": "1", "unit": "tbsp" },
+      { "id": "i023", "name": "Sesame oil", "amound": "1", "unit": "tsp" },
+      { "id": "i024", "name": "Garlic clove", "amound": "1", "unit": "" }
+    ],
+    "instruction": "Stir-fry tofu until golden, then add vegetables and sauces. Cook for another 5 minutes.",
+    "category": "Vegan",
+    "imageUrl": "assets/images/recipes/tofu-stirfry.jpg",
+    "createdAt": "2025-02-10T15:00:00.000Z"
+  },
+  {
+    "id": "r005",
+    "name": "Creamy Mushroom Pasta",
+    "ingredients": [
+      { "id": "i025", "name": "Pasta", "amound": "100", "unit": "g" },
+      { "id": "i026", "name": "Mushrooms", "amound": "150", "unit": "g" },
+      { "id": "i027", "name": "Onion", "amound": "0.5", "unit": "" },
+      { "id": "i028", "name": "Cream", "amound": "0.5", "unit": "cup" },
+      { "id": "i029", "name": "Olive oil", "amound": "1", "unit": "tbsp" },
+      { "id": "i030", "name": "Parmesan", "amound": "", "unit": "to serve" }
+    ],
+    "instruction": "Cook pasta. In a pan, sauté onion and mushrooms, add cream, and mix with pasta. Serve with Parmesan.",
+    "category": "Pasta",
+    "imageUrl": "assets/images/recipes/mushroom-pasta.jpg",
+    "createdAt": "2025-02-18T19:30:00.000Z",
+    "notes": "Add spinach or peas for extra color and fiber."
+  }
+]

@@ -1,4 +1,3 @@
-import { LoginPayload } from "@meal-planner/shared";
 import { createActionGroup, props } from "@ngrx/store";
 import { User } from "./auth.model";
 

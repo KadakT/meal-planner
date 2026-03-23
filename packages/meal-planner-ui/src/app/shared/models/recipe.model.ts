@@ -4,6 +4,9 @@ export interface Recipe {
     id: string;
     name: string;
     ingredients: Ingredient[];
-    colories?: number;
+    instruction: string;
+    category?: string;
+    imageUrl?: string;
+    createdAt?: Date;
     notes?: string;
 }

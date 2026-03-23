@@ -14,13 +14,14 @@
     "dev:ui": "npm run build:shared && npm run start --workspace meal-planner-ui"
   },
   "overrides": {
-      "rxjs": "7.8.1"
+    "rxjs": "7.8.1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "baseline-browser-mapping": "^2.9.15",
     "concurrently": "^9.2.1"
   }
 }

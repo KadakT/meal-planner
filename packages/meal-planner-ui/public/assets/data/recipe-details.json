@@ -1,0 +1,16 @@
+{
+    "id": "r001",
+    "name": "Creamy Chicken Pasta",
+    "ingredients": [
+      { "name": "Chicken breast", "amount": 400, "unit": "g" },
+      { "name": "Pasta", "amount": 250, "unit": "g" },
+      { "name": "Heavy cream", "amount": 200, "unit": "ml" },
+      { "name": "Garlic", "amount": 2, "unit": "cloves" },
+      { "name": "Parmesan", "amount": 50, "unit": "g" }
+    ],
+    "instruction": "Cook pasta according to package instructions. Fry chicken with garlic until golden. Add cream and simmer. Mix with pasta and top with parmesan.",
+    "category": "Dinner",
+    "imageUrl": "https://picsum.photos/400/300?random=1",
+    "createdAt": "2025-01-15T10:30:00.000Z",
+    "notes": "Can be made lighter with cooking cream."
+  }

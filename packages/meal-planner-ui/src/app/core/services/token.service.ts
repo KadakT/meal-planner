@@ -5,6 +5,7 @@ import { SessionKeys } from 'app/shared/definitions';
 @Injectable({
   providedIn: 'root'
 })
+
 export class TokenService {
   storeTokenWithExpiry(token: string, rememberMe: boolean, ttlInMs: number): void {
     if (rememberMe) {
