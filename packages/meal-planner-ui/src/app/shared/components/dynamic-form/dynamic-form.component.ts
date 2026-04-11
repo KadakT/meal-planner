@@ -69,91 +69,6 @@ import { FormFieldComponent } from '@components/form-field/form-field.component'
       }
     </form>
   `,
-  styles: [`
-    .form-header {
-      margin-bottom: 1.5rem;
-    }
-    .form-title {
-      font-size: 1.5rem;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-      color: #1f2937;
-    }
-    .form-description {
-      color: #6b7280;
-      margin-bottom: 0;
-    }
-    .form-fields {
-      margin-bottom: 1.5rem;
-    }
-    .form-fields.grid {
-      display: grid;
-      gap: 1rem;
-    }
-    .form-fields.horizontal .form-field-wrapper {
-      display: inline-block;
-      margin-right: 1rem;
-    }
-    .form-field-wrapper {
-      margin-bottom: 1rem;
-    }
-    .form-actions {
-      display: flex;
-      gap: 0.75rem;
-      align-items: center;
-    }
-    .btn {
-      padding: 0.5rem 1rem;
-      border: none;
-      border-radius: 0.375rem;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.2s ease-in-out;
-    }
-    .btn-primary {
-      background-color: #3b82f6;
-      color: white;
-    }
-    .btn-primary:hover:not(:disabled) {
-      background-color: #2563eb;
-    }
-    .btn-primary:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-    }
-    .btn-secondary {
-      background-color: #f3f4f6;
-      color: #374151;
-      border: 1px solid #d1d5db;
-    }
-    .btn-secondary:hover {
-      background-color: #e5e7eb;
-    }
-    .spinner {
-      display: inline-block;
-      width: 1rem;
-      height: 1rem;
-      border: 2px solid #ffffff;
-      border-radius: 50%;
-      border-top-color: transparent;
-      animation: spin 1s ease-in-out infinite;
-      margin-right: 0.5rem;
-    }
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-    .form-errors {
-      margin-top: 1rem;
-      padding: 0.75rem;
-      background-color: #fef2f2;
-      border: 1px solid #fecaca;
-      border-radius: 0.375rem;
-    }
-    .error-message {
-      color: #dc2626;
-      font-size: 0.875rem;
-    }
-  `]
 })
 export class DynamicFormComponent implements OnInit, OnDestroy {
   @Input() config!: FormConfig;
@@ -183,7 +98,9 @@ export class DynamicFormComponent implements OnInit, OnDestroy {
       return true;
     });
   });
+
   constructor(private formBuilder: DynamicFormBuilderService) {}
+
   ngOnInit(): void {
     try {
       this.initializeForm();
@@ -193,31 +110,12 @@ export class DynamicFormComponent implements OnInit, OnDestroy {
       this.formErrors.set(['Failed to initialize form. Please check the configuration.']);
     }
   }
+
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
   }
-  private initializeForm(): void {
-    if (!this.config) {
-      throw new Error('Form configuration is required');
-    }
-    this.formConfig.set(this.config);
-    this.form = this.formBuilder.createForm(this.config);
-  }
-  private setupFormSubscriptions(): void {
-    // Listen to form value changes for conditional field updates
-    this.form.valueChanges
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(value => {
-        this.formBuilder.updateFieldVisibility(this.form, this.config.fields);
-        this.formChange.emit(value);
-        
-        // Clear form-level errors when user starts fixing issues
-        if (this.formErrors().length > 0 && this.form.valid) {
-          this.formErrors.set([]);
-        }
-      });
-  }
+
   onSubmit(): void {
     if (this.isSubmitting()) return;
     this.markAllFieldsAsTouched();
@@ -244,6 +142,7 @@ export class DynamicFormComponent implements OnInit, OnDestroy {
       this.formErrors.set(['Please correct the errors below']);
     }
   }
+
   onReset(): void {
     this.form.reset();
     this.formErrors.set([]);
@@ -256,19 +155,23 @@ export class DynamicFormComponent implements OnInit, OnDestroy {
       }
     });
   }
+
   onFieldValueChange(event: { field: string; value: any }): void {
     // Handle any specific field value change logic here
     console.log('Field changed:', event);
   }
+
   getFormControl(fieldKey: string): FormControl  {
     return this.form.get(fieldKey) as FormControl;
   }
+
   getFieldError(field: FormField): string {
     const control = this.form.get(field.key);
     if (!control || !control.errors || !control.touched) return '';
     
     return this.formBuilder.getValidationError(field, control);
   }
+
   getFieldsContainerClass(): string {
     const config = this.formConfig();
     if (!config) return '';
@@ -284,11 +187,35 @@ export class DynamicFormComponent implements OnInit, OnDestroy {
     }
     return classes.join(' ');
   }
+    private initializeForm(): void {
+    if (!this.config) {
+      throw new Error('Form configuration is required');
+    }
+    this.formConfig.set(this.config);
+    this.form = this.formBuilder.createForm(this.config);
+  }
+
+  private setupFormSubscriptions(): void {
+    // Listen to form value changes for conditional field updates
+    this.form.valueChanges
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(value => {
+        this.formBuilder.updateFieldVisibility(this.form, this.config.fields);
+        this.formChange.emit(value);
+        
+        // Clear form-level errors when user starts fixing issues
+        if (this.formErrors().length > 0 && this.form.valid) {
+          this.formErrors.set([]);
+        }
+      });
+  }
+
   private markAllFieldsAsTouched(): void {
     Object.keys(this.form.controls).forEach(key => {
       this.form.get(key)?.markAsTouched();
     });
   }
+
   private collectFormErrors(): { [key: string]: string } {
     const errors: { [key: string]: string } = {};
     
@@ -302,4 +229,5 @@ export class DynamicFormComponent implements OnInit, OnDestroy {
     });
     return errors;
   }
+
 }

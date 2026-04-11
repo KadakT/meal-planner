@@ -6,7 +6,7 @@ type ButtonVariant = 'primary' | 'secondary' | 'danger' | 'text';
 type ButtonSize = 'sm' | 'md' | 'lg';
 
 @Component({
-  selector: 'app-buttons',
+  selector: 'app-button',
   standalone: true,
   imports: [MatButtonModule, MatProgressSpinnerModule],
   template: `
@@ -29,7 +29,6 @@ export class ButtonsComponent {
   @Output() pressed = new EventEmitter<void>();
 
   btnType = input<string>('button');
-  btnText = input<string>();
   btnLabel = input<string>();
   btnClass = input<string>();
   variant: ButtonVariant = 'primary';

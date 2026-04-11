@@ -1,7 +1,9 @@
 {
   "PAGES": {
     "RECIPES_LIST": {
-      "TITLE": "Recipes"
+      "TITLE": "Recipes",
+      "TITLE_NEW": "New Recipe",
+      "ADD_NEW": "Add new recipe"
     }
   }
 }

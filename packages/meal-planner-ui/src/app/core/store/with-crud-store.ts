@@ -13,8 +13,10 @@ export function withCrudStore<
 
         withState<CrudState<T>>({
             items: [],
+            currentItem: null,
             loading: {
                 load: false,
+                loadById: false,
                 create: false,
                 update: false,
                 delete: false
@@ -52,6 +54,37 @@ export function withCrudStore<
 
                 );
             },
+
+            loadById: (id: string | number) => {
+                if (store.loading().loadById) return EMPTY;
+
+                setLoading(store, 'loadById', true);
+
+                return http.get<T>(`${config.baseUrl}/${id}`).pipe(
+                    tap((item) => {
+                        const items = store.items();
+                        const existingIndex = items.findIndex((existing) => existing.id === item.id);
+
+                        const updatedItems =
+                            existingIndex >= 0
+                                ? items.map((existing) => (existing.id === item.id ? item : existing))
+                                : [...items, item];
+
+                        patchState(store, {
+                            currentItem: item,
+                            items: updatedItems
+                        });
+                    }),
+                    catchError((err) => {
+                        patchState(store, { error: err.message });
+                        return throwError(() => err);
+                    }),
+                    finalize(() => {
+                        setLoading(store, 'loadById', false);
+                    })
+                );
+            },
+
 
             //CREATE
             create: (item: T) => {

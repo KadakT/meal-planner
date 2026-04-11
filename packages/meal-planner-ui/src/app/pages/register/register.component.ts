@@ -25,7 +25,7 @@ import { AuthActions } from "app/features/auth/auth.actions";
                     <p>{{ errorMessage }}</p>
                     <app-auth-form [mode]="'register'" (onSubmitCredentials)="formSubmitted($event)">
                         <h2>Register</h2>
-                        <app-buttons [btnClass]="'btn btn-primary'" [btnType]="'submit'">Register</app-buttons>
+                        <app-button [btnClass]="'btn btn-primary'" [btnType]="'submit'">Register</app-button>
                     </app-auth-form>
                         <p>Already a user? <a (click)="switchForm()" tabindex="0">Sign In</a></p>
             </div>

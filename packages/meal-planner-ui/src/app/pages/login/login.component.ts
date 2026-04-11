@@ -26,7 +26,7 @@ import { AuthActions } from 'app/features/auth/auth.actions';
                   <p>{{ errorMessage }}</p>
                   <app-auth-form [mode]="'login'" (onSubmitCredentials)="formSubmitted($event)">
                       <h2>Member Login</h2>
-                      <app-buttons variant="secondary" [btnType]="'submit'">Login</app-buttons>
+                      <app-button variant="secondary" [btnType]="'submit'">Login</app-button>
                   </app-auth-form>
                       <p>New Here? <a (click)="switchForm()"  tabindex="0">Create an Account</a></p>
           </div>
