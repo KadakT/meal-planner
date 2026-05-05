@@ -4,10 +4,10 @@ import {
     withComputed,
 } from '@ngrx/signals';
 import { computed} from '@angular/core';
-import { Recipe } from '../../../shared/models/recipe.model';
+import { CreateRecipeRequest, Recipe, RecipeApi, UpdateRecipeRequest } from '../../../shared/models/recipe.model';
 import { withCrudStore } from 'app/core/store/with-crud-store';
 import { environment } from 'environments/environment';
-import { buildRecipeListVm } from '../recipes-list/recipes-list.vm-builder';
+import { buildRecipeListVm, mapRecipeApiToRecipe } from '../recipes-list/recipes-list.vm-builder';
 
 export const RecipeStore = signalStore(
   { providedIn: 'root' },
@@ -16,8 +16,9 @@ export const RecipeStore = signalStore(
     selectedRecipeId: null as string | null,
   }),
 
-  withCrudStore<Recipe>({
-    baseUrl: `${environment.apiUrl}/recipes`
+  withCrudStore<Recipe, CreateRecipeRequest, UpdateRecipeRequest, RecipeApi>({
+    baseUrl: `${environment.apiUrl}/recipes`,
+    mapFromApi: mapRecipeApiToRecipe,
   }),
 
   withComputed((store) => ({

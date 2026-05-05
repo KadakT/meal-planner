@@ -2,8 +2,15 @@
 @use "sass:color";
 .card {
     display: flex;
-   @include themes() {
-    background-color: getValue(backgroundColorCards);
-    color: getValue(textPrimary);
-   }
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    cursor: pointer;
+    @include themes() {
+        background-color: getValue(backgroundColorCards);
+        color: getValue(textPrimary);
+    }
+
+    &:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+    }
 }

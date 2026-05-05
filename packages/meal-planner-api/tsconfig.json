@@ -1,12 +1,9 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "rootDir": "src",
-    "outDir": "dist",
-     "paths": {
-      "@meal-planner/shared": ["../shared/src/index.ts"]
-    }
+    "rootDir": ".",
+    "outDir": "dist"
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "../shared/src/**/*"],
   "exclude": ["node_modules", "dist"]
 }

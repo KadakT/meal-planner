@@ -1,5 +1,5 @@
 
-<div [class.content]="isLoggedIn$ | async">
+<div [class]="(isLoggedIn$ | async) ? 'content' : 'login-content'">
   <app-header *ngIf="isLoggedIn$ | async"></app-header>
   <app-sidebar *ngIf="isLoggedIn$ | async"></app-sidebar>
   <main class="main">

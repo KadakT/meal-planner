@@ -1,13 +1,11 @@
-/* To learn more about Typescript configuration file: https://www.typescriptlang.org/docs/handbook/tsconfig-json.html. */
-/* To learn more about Angular compiler options: https://angular.dev/reference/configs/angular-compiler-options. */
 {
   "extends": "../../tsconfig.base.json",
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "src",
-     "paths": {
-      "@components/*": ["app/shared/components/*"],
-      "@meal-planner/shared": ["../../shared/src/index.ts"]
+    "paths": {
+      "@meal-planner/shared": ["../../shared/src/index.ts"],
+      "@components/*": ["./app/shared/components/*"]
     },
     "outDir": "./dist/out-tsc",
     "strict": true,

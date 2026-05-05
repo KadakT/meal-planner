@@ -3,14 +3,14 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
 import { FormField } from '../../../core/models/form-field.interface';
-import { FormConfig, FormSubmissionResult } from 'app/core/models/form-config.interface';
-import { DynamicFormBuilderService } from 'app/core/services';
-import { FormFieldComponent } from '@components/form-field/form-field.component';
+import { FormFieldComponent } from '../form-field/form-field.component';
+import { FormConfig, FormSubmissionResult } from '../../../core/models/form-config.interface';
+import { DynamicFormBuilderService } from '../../../core/services';
 
 @Component({
   selector: 'app-dynamic-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormFieldComponent],
+  imports: [CommonModule, ReactiveFormsModule, FormFieldComponent, CommonModule ],
   template: `
     <form [formGroup]="form" (ngSubmit)="onSubmit()" [class]="formConfig()?.layout || 'vertical'">
       
@@ -78,6 +78,7 @@ export class DynamicFormComponent implements OnInit, OnDestroy {
   formConfig = signal<FormConfig | null>(null);
   isSubmitting = signal<boolean>(false);
   formErrors = signal<string[]>([]);
+  
   
   form!: FormGroup;
   private destroy$ = new Subject<void>();

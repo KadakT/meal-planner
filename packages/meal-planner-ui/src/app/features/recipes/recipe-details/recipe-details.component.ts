@@ -2,13 +2,17 @@ import { Component, DestroyRef, inject, signal } from "@angular/core";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { ActivatedRoute, Router } from "@angular/router";
 import { TranslateModule } from "@ngx-translate/core";
+import { RecipeFormComponent } from "./recipe-form/recipe-form.component";
 
 @Component({
     selector: 'app-recipe-details',
     standalone: true,
-    imports: [ TranslateModule],
+    imports: [ TranslateModule, RecipeFormComponent],
     template: `
         <h1>{{ isNew() ? ('PAGES.RECIPES_LIST.TITLE_NEW' | translate) : 'Name' }}</h1>
+        @if(isNew()){
+            <app-recipe-form></app-recipe-form>
+        }
     `
 })
 

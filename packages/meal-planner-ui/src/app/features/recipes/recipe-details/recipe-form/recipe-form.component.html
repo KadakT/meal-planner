@@ -1,0 +1,107 @@
+<form novalidate (submit)="onSubmit($event)">
+    <div class="row">
+        <mat-form-field>
+            <mat-label>{{ 'FORM.NAME' | translate }}</mat-label>
+            <input matInput [field]="recipeForm.name">
+            @if (recipeForm.name().touched() && recipeForm.name().invalid()) {
+            <ul class="error-list">
+                @for (error of recipeForm.name().errors(); track error) {
+                <li>{{ error.message }}</li>
+                }
+            </ul>
+            }
+        </mat-form-field>
+
+    </div>
+
+    <mat-form-field>
+        <mat-label>{{ 'FORM.CATEGORY' | translate }}</mat-label>
+        <mat-select [field]="recipeForm.category">
+            <mat-option value="meat">{{ 'CATEGORIES.MEAT' | translate }}</mat-option>
+            <mat-option value="fish">{{ 'CATEGORIES.FISH' | translate }}</mat-option>
+            <mat-option value="dessert">{{ 'CATEGORIES.DESSERT' | translate }}</mat-option>
+            <mat-option value="other">{{ 'CATEGORIES.OTHER' | translate }}</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <div class="row">
+        <h2>{{ 'FORM.INGREDIENTS' | translate }}</h2>
+        <button type="button" mat-raised-button color="primary" (click)="addIngredient()">
+            {{ 'BUTTONS.ADD_INGREDIENT' | translate }}
+        </button>
+    </div>
+    <ng-container>
+        @for (ingredientForm of recipeForm.ingredients; let index = $index; track index) {
+        <div class="row">
+            <mat-form-field>
+                <mat-label>{{ 'FORM.INGREDIENT' | translate }}</mat-label>
+                <input matInput [field]="ingredientForm.name">
+                @if (ingredientForm.name().touched() && ingredientForm.name().invalid()) {
+                <ul class="error-list">
+                    @for (error of ingredientForm.name().errors(); track error) {
+                    <li>{{ error.message }}</li>
+                    }
+                </ul>
+                }
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>{{ 'FORM.AMOUNT' | translate }}</mat-label>
+                <input matInput [field]="ingredientForm.amount">
+                @if (ingredientForm.amount().touched() && ingredientForm.amount().invalid()) {
+                <ul class="error-list">
+                    @for (error of ingredientForm.amount().errors(); track error) {
+                    <li>{{ error.message }}</li>
+                    }
+                </ul>
+                }
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>{{ 'FORM.UNIT' | translate }}</mat-label>
+                <mat-select [field]="ingredientForm.unit">
+                    <mat-option value="gram">{{ 'UNITS.GRAM' | translate }}</mat-option>
+                    <mat-option value="kilogram">{{ 'UNITS.KILOGRAM' | translate }}</mat-option>
+                    <mat-option value="liter">{{ 'UNITS.LITER' | translate }}</mat-option>
+                    <mat-option value="milliliter">{{ 'UNITS.MILLILITER' | translate }}</mat-option>
+                    <mat-option value="cup">{{ 'UNITS.CUP' | translate }}</mat-option>
+                    <mat-option value="tablespoon">{{ 'UNITS.TABLESPOON' | translate }}</mat-option>
+                    <mat-option value="teaspoon">{{ 'UNITS.TEASPOON' | translate }}</mat-option>
+                    <mat-option value="piece">{{ 'UNITS.PIECE' | translate }}</mat-option>
+                </mat-select>
+                @if (ingredientForm.unit().touched() && ingredientForm.unit().invalid()) {
+                <ul class="error-list">
+                    @for (error of ingredientForm.unit().errors(); track error) {
+                    <li>{{ error.message }}</li>
+                    }
+                </ul>
+                }
+            </mat-form-field>
+
+            <button type="button" mat-icon-button color="warn"
+                (click)="onUpdateIngredient(ingredientForm.name(), ingredientForm)">
+                <mat-icon>edit</mat-icon>
+            </button>
+            <button type="button" mat-icon-button color="warn"
+                (click)="onDeleteIngredient(ingredientForm.name(), index)">
+                <mat-icon>delete</mat-icon>
+            </button>
+        </div>
+        }
+    </ng-container>
+
+    <mat-form-field>
+        <mat-label>{{ 'FORM.IMAGE_URL' | translate }}</mat-label>
+        <input matInput [field]="recipeForm.imageUrl">
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>{{ 'FORM.INSTRUCTION' | translate }}</mat-label>
+        <textarea matInput [field]="recipeForm.instruction"></textarea>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>{{ 'FORM.NOTES' | translate }}</mat-label>
+        <textarea matInput [field]="recipeForm.notes"></textarea>
+    </mat-form-field>
+    <button type="submit" mat-raised-button color="primary">
+        {{ 'BUTTONS.SAVE' | translate }}
+    </button>
+</form>

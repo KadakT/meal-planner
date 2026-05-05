@@ -5,9 +5,23 @@
   padding-right: clamp(1rem, 2vw, 3rem);
   padding-top: clamp(2rem, 4vh, 4rem);
   padding-bottom: clamp(2rem, 4vh, 4rem);
-  display: flex;
-  flex-direction: column;
+  width: 100%;
+  overflow-y: auto;
+    @include themes(){
+      background-color: getValue(backgroundColor);
+      color: getValue(textPrimary);
+    }
 }
+
+.login-content {
+  .main {
+    height: 100%;
+      @include themes(){
+      background-color: transparent;
+    }
+  }
+}
+
 footer,
 header,
 nav{
@@ -21,7 +35,7 @@ nav{
   display: grid;
   grid-template-columns: 200px 1fr;
   grid-template-rows: 60px 1fr 30px;
-  height: 100dvh;
+  height: 100%;
   overflow: hidden;
   background-color: white; // TODO: remove after theme implementation
   
@@ -50,4 +64,10 @@ footer{
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.row{
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
 }

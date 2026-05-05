@@ -5,7 +5,7 @@
   "main": "dist/server.js",
   "scripts": {
     "start": "ts-node src/server.ts",
-    "dev": "nodemon --exec ts-node src/server.ts",
+    "dev": "nodemon --watch src --ext ts,json --exec ts-node -r tsconfig-paths/register src/server.ts",
     "build": "tsc -p tsconfig.json"
   },
   "dependencies": {
@@ -24,9 +24,9 @@
     "@types/express": "^5.0.1",
     "@types/jsonwebtoken": "^9.0.9",
     "@types/node": "^22.15.17",
-    "nodemon": "^3.1.10",
+    "nodemon": "^3.1.14",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
-    "typescript": "^5.8.3"
+    "typescript": "^5.9.3"
   }
 }

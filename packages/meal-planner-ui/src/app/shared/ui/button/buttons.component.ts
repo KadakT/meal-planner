@@ -47,6 +47,8 @@ export class ButtonsComponent {
       if (this.disabled()) {
         event.preventDefault();
         event.stopPropagation();
+      }else{
+        this.pressed.emit();
       }
     }
 }

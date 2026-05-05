@@ -8,7 +8,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 @Component({
     selector: 'app-recipes-list',
     standalone: true,
-    imports: [ RecipeCardComponent, TranslateModule, ButtonsComponent ],
+    imports: [ RecipeCardComponent, TranslateModule, ButtonsComponent, ButtonsComponent ],
     template: `
     <div class="recipes">
         <h1>{{ 'PAGES.RECIPES_LIST.TITLE' | translate }}</h1>
@@ -21,6 +21,9 @@ import { ActivatedRoute, Router } from "@angular/router";
             <app-recipe-card [title]="recipe.name">
                 <img [src]="recipe.imageUrl" width="340px" alt="{{ recipe.name }}">
                 <p>{{ recipe.description }}</p>
+                <app-button (click)="existingRecipe(recipe.id)">
+                    {{ 'PAGES.RECIPES_LIST.VIEW_DETAILS' | translate }}
+                </app-button>
             </app-recipe-card>
         }
     </div>
@@ -37,10 +40,17 @@ export class RecipesListComponent {
 
     constructor() {
         console.log('RecipesListComponent created');
-        this.recipeStore.load().subscribe();
+        this.recipeStore.load().subscribe(() =>{
+            console.log('Recipes loaded:', this.recipeStore.items());
+        });
     }
 
     addNewRecipe() {
         this.router.navigate(['../new'], {relativeTo: this.route});
+    }
+
+    existingRecipe(id: string) {
+        console.log('Navigating to recipe with id:', id);
+        this.router.navigate(['../', id], {relativeTo: this.route});
     }
 }

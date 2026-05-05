@@ -1,4 +1,4 @@
-import { Recipe } from "app/shared/models/recipe.model";
+import { Recipe, RecipeApi } from "app/shared/models/recipe.model";
 
 export interface RecipesListVM {
     recipes: RecipeVM[];
@@ -15,18 +15,40 @@ export interface RecipeVM {
     createdAt: Date;
 }
 
-export function buildRecipeListVm(recipes: Recipe[], loading: boolean, error: string | null) {
+export function buildRecipeListVm(recipes: Recipe[], loading: boolean, error: string | null)
+: RecipesListVM {
     console.log(recipes);
     return {
-        recipes: recipes.map(r => ({
-            id: r.id,
-            name: r.name,
-            description: r.instruction.substring(0, 100) + '...', 
-            imageUrl: r.imageUrl ? r.imageUrl : '/assets/images/meal-default.jpg',
-            category: r.category,
-            createdAt: r.createdAt,
-        })),
+        recipes: recipes.map(mapRecipe),
         loading,
         error,
     }
+}
+
+function mapRecipe(recipe: Recipe): RecipeVM {
+    return {
+        id: recipe.id,
+        name: recipe.name,
+        description: recipe.instruction,
+        category: recipe.category || 'Uncategorized',
+        imageUrl: recipe.imageUrl || '/assets/images/meal-default.jpg',
+        createdAt: recipe.createdAt || new Date(),
+    };
+}
+
+export function mapRecipeApiToRecipe(api: RecipeApi): Recipe {
+  return {
+    id: api._id,
+    name: api.name,
+    ingredients: api.ingredients.map((ingredient) => ({
+      name: ingredient.name,
+      amount: ingredient.amount ?? '',
+      unit: ingredient.unit ?? '',
+    })),
+    instruction: api.instruction,
+    category: api.category,
+    imageUrl: api.imageUrl,
+    notes: api.notes,
+    createdAt: new Date(api.createdAt),
+  };
 }

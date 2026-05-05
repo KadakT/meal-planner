@@ -1,9 +1,52 @@
 {
+  "BUTTONS": {
+    "SAVE": "Save",
+    "CANCEL": "Cancel",
+    "ADD": "Add",
+    "DELETE": "Delete",
+    "ADD_INGREDIENT": "Add ingredient",
+    "REMOVE_INGREDIENT": "Remove ingredient"
+  },
   "PAGES": {
     "RECIPES_LIST": {
       "TITLE": "Recipes",
       "TITLE_NEW": "New Recipe",
-      "ADD_NEW": "Add new recipe"
+      "ADD_NEW": "Add new recipe",
+      "VIEW_DETAILS": "View details"
     }
+  },
+  "FORM": {
+    "NAME": "Name",
+    "DESCRIPTION": "Description",
+    "INGREDIENTS": "Ingredients",
+    "INSTRUCTION": "Instruction",
+    "INGREDIENT": "Ingredient",
+    "AMOUNT": "Amount",
+    "UNIT": "Unit",
+    "CATEGORY": "Category",
+    "NOTES": "Notes",
+    "IMAGE_URL": "Image URL"
+  },
+  "CATEGORIES": {
+    "MEAT": "Meat",
+    "FISH": "Fish",
+    "DESSERT": "Dessert",
+    "OTHER": "Other"
+  },
+  "UNITS": {
+    "GRAM": "Gram",
+    "KILOGRAM": "Kilogram",
+    "LITER": "Liter",
+    "MILLILITER": "Milliliter",
+    "CUP": "Cup",
+    "TABLESPOON": "Tablespoon",
+    "TEASPOON": "Teaspoon",
+    "PIECE": "Piece"
+  },
+  "VALIDATION": {
+    "REQUIRED": "{{ field }} is required",
+    "MIN_LENGTH": "{{ field }} must be at least {{ length }} characters",
+    "MIN": "{{ field }} must be at least {{ min }}",
+    "EMAIL": "Please enter a valid email address"
   }
 }

@@ -5,13 +5,21 @@ import { HttpClient } from "@angular/common/http";
 import { catchError, EMPTY, finalize, tap, throwError } from "rxjs";
 import { setLoading } from "../helpers/set-loading.helper";
 
+export interface CrudStoreConfig<TEntity, TApi = TEntity> {
+    baseUrl: string;
+    mapFromApi?: (item: TApi) => TEntity;
+}
+
 export function withCrudStore<
-    T extends { id: string | number }
->(config: { baseUrl: string }) {
+    TEntity extends { id: string | number },
+    TCreate = Omit<TEntity, 'id'>,
+    TUpdate = Partial<TCreate>,
+    TApi = TEntity
+>(config: CrudStoreConfig<TEntity, TApi>) {
 
     return signalStoreFeature(
 
-        withState<CrudState<T>>({
+        withState<CrudState<TEntity>>({
             items: [],
             currentItem: null,
             loading: {
@@ -31,12 +39,16 @@ export function withCrudStore<
 
                 setLoading(store, 'load', true);
 
-                return http.get<T[]>(config.baseUrl).pipe(
+                return http.get<TApi[]>(config.baseUrl).pipe(
 
-                    tap(items => {
-
-                        patchState(store, { items });
-
+                    tap((itemsFromApi) => {
+                        const mapFromApi = (item: TApi): TEntity =>
+                            config.mapFromApi
+                                ? config.mapFromApi(item)
+                                : item as unknown as TEntity;
+                        patchState(store, {
+                            items: itemsFromApi.map(mapFromApi),
+                        });
                     }),
 
                     catchError(err => {
@@ -60,18 +72,19 @@ export function withCrudStore<
 
                 setLoading(store, 'loadById', true);
 
-                return http.get<T>(`${config.baseUrl}/${id}`).pipe(
+                return http.get<TApi>(`${config.baseUrl}/${id}`).pipe(
                     tap((item) => {
+                        const mapped = config.mapFromApi ? config.mapFromApi(item) : (item as unknown as TEntity);
                         const items = store.items();
-                        const existingIndex = items.findIndex((existing) => existing.id === item.id);
+                        const existingIndex = items.findIndex((existing) => existing.id === mapped.id);
 
                         const updatedItems =
                             existingIndex >= 0
-                                ? items.map((existing) => (existing.id === item.id ? item : existing))
-                                : [...items, item];
+                                ? items.map((existing) => (existing.id === mapped.id ? mapped : existing))
+                                : [...items, mapped];
 
                         patchState(store, {
-                            currentItem: item,
+                            currentItem: mapped,
                             items: updatedItems
                         });
                     }),
@@ -87,18 +100,19 @@ export function withCrudStore<
 
 
             //CREATE
-            create: (item: T) => {
+            create: (item: TCreate) => {
 
                 if (store.loading().create) return EMPTY;
 
                 setLoading(store, 'create', true);
 
-                return http.post<T>(config.baseUrl, item).pipe(
+                return http.post<TApi>(config.baseUrl, item).pipe(
 
                     tap(newItem => {
+                        const mapped = config.mapFromApi ? config.mapFromApi(newItem) : (newItem as unknown as TEntity);
 
                         patchState(store, {
-                            items: [...store.items(), newItem]
+                            items: [...store.items(), mapped]
                         });
 
                     }),
@@ -113,19 +127,20 @@ export function withCrudStore<
             },
 
             //UPDATE
-            update: (item: T) => {
+            update: (id: string | number, item: TUpdate) => {
 
                 if (store.loading().update) return EMPTY;
 
                 setLoading(store, 'update', true);
 
-                return http.put<T>(`${config.baseUrl}/${item.id}`, item).pipe(
+                return http.put<TApi>(`${config.baseUrl}/${id}`, item).pipe(
 
                     tap(updated => {
+                        const mapped = config.mapFromApi ? config.mapFromApi(updated) : (updated as unknown as TEntity);
 
                         patchState(store, {
                             items: store.items().map(i =>
-                                i.id === updated.id ? updated : i
+                                i.id === mapped.id ? mapped : i
                             )
                         });
 

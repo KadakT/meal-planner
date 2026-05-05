@@ -54,7 +54,7 @@ export class AuthService {
   handleSuccessfulLogin(user: User, token: string, rememberMe: boolean) : void{
     this.tokenService.storeAuthDataWithExpiry(token, rememberMe, TOKEN_TTL.REMEMBER_ME, user);
     delay(1000),
-    this.router.navigate(['/dashboard']);
+    this.router.navigate(['/overview']);
   }
 
   private handleError(error: HttpErrorResponse) {
