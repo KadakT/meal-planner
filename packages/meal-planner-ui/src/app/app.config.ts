@@ -12,7 +12,6 @@ import { authReducer } from './features/auth/auth.reducer';
 import { provideEffects } from '@ngrx/effects';
 import { AuthEffects } from './features/auth/auth.effects';
 
-console.log('appConfig providers applied');
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),

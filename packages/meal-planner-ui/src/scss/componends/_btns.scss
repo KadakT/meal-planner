@@ -3,15 +3,18 @@
 
 // Base button
 .btn {
-  display: inline-block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   cursor: pointer;
   font-weight: normal;
-  border-radius: $radius-pill;
   border: 1px solid transparent;
   transition: all 0.2s ease-in-out;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  padding: 5px 14px;
+  padding: .5rem 1.5rem;
+  border-radius: $cards-radius;
+  box-shadow: $btn-shadow;
 
   &--small {
     padding: 0.35rem 0.9rem;
@@ -19,7 +22,7 @@
   }
 
   &--large {
-    padding: 0.75rem 1.5rem;
+    padding: 0.75rem 2rem;
     font-size: 1rem;
   }
 
@@ -90,6 +93,48 @@
 
   &:focus {
     outline: 3px solid color.scale($color-accent, $lightness: 35%);
+    outline-offset: 2px;
+  }
+}
+
+.btn-primary.danger {
+  background-color: $color-error-dark;
+  border-color: $color-error-dark;
+  color: #fff;
+
+  &:hover {
+    background-color: $color-error-border-dark;
+    border-color: $color-error-text-light;
+  }
+
+  &:active {
+    background-color: $color-error-border-dark;
+    border-color: $color-error-text-light;
+  }
+
+  &:focus {
+    outline: 3px solid color.scale($color-error-dark, $lightness: 35%);
+    outline-offset: 2px;
+  }
+}
+
+.btn-secondary.danger {
+  background-color: transparent;
+  border-color: $color-error-dark;
+  color: $color-error-dark;
+
+  &:hover {
+    background-color: rgba($color-error-dark, 0.1);
+  }
+
+  &:active {
+    background-color: transparent;
+    border-color: $color-error-text-light;
+    color:  $color-error-text-light;
+  }
+
+  &:focus {
+    outline: 3px solid color.scale($color-error-dark, $lightness: 35%);
     outline-offset: 2px;
   }
 }

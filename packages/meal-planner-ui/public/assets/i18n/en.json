@@ -1,13 +1,31 @@
 {
+  "TITLE": "Meal Planner App",
   "BUTTONS": {
     "SAVE": "Save",
     "CANCEL": "Cancel",
     "ADD": "Add",
     "DELETE": "Delete",
     "ADD_INGREDIENT": "Add ingredient",
-    "REMOVE_INGREDIENT": "Remove ingredient"
+    "REMOVE_INGREDIENT": "Remove ingredient",
+    "BACK_TO_LIST": "Back to list"
   },
   "PAGES": {
+    "AUTH":{
+      "TITLE": "Meal Planner",
+      "LOGIN": {
+        "TITLE": "Login",
+        "TITLE_NEW": "New User?",
+        "ADD_NEW": "Create new account",
+        "VIEW_DETAILS": "View details"
+      },
+      "REGISTER": {
+        "TITLE": "Register",
+        "TITLE_EXISTING": "Existing User?",
+        "ADD_EXISTING": "Already have an account?",
+        "LOGIN_LINK": "Login here",
+        "VIEW_DETAILS": "View details"
+      }
+    },
     "RECIPES_LIST": {
       "TITLE": "Recipes",
       "TITLE_NEW": "New Recipe",

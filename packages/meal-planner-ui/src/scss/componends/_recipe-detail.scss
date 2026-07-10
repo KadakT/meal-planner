@@ -1,0 +1,91 @@
+@use '../abstracts' as *;
+
+.recipe-page {
+    max-width: 1000px;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+    padding: 1rem;
+    border-radius: 6px;
+    @include themes() {
+        background-color: getValue(backgroundColorCards);
+        color: getValue(textPrimary);
+    }
+    &__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 24px;
+    }
+
+    &__title-block {
+        h1 {
+        margin: 0;
+        font-size: 28px;
+        font-weight: 600;
+        }
+    }
+
+    &__meta {
+      margin-top: 4px;
+      font-size: 13px;
+      color: #888;
+      display: flex;
+      gap: 6px;
+    }
+
+    &__actions {
+        display: flex;
+        gap: 8px;
+    }
+
+    &__content {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+    }
+
+    &__card {
+        border-radius: 16px;
+        padding: 16px;
+
+        h2 {
+            margin-top: 0;
+            margin-bottom: 12px;
+            font-size: 18px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+
+            li {
+                display: flex;
+                justify-content: space-between;
+                padding: 6px 0;
+                border-bottom: 1px solid #eee;
+
+                &:last-child {
+                    border-bottom: none;
+                }
+
+                .name {
+                    font-weight: 500;
+                }
+
+                .amount {
+                    color: #666;
+                    font-size: 13px;
+                }
+            }
+        }
+
+        .instruction {
+            white-space: pre-line;
+            line-height: 1.5;
+        }
+    }
+
+    &__card--full-width {
+        grid-column: 1 / -1;
+    }
+}

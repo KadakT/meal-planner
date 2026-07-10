@@ -1,8 +1,6 @@
 @use '../abstracts' as *;
 .auth-form{
-    &__inputs{
-        max-width: 300px;
-    }
+
     &__group {
         input {
             padding: 20px 0px;

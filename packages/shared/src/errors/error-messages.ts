@@ -58,6 +58,22 @@ export const ErrorMessages: Record<string, { message: string; statusCode: number
   MISSING_FIELDS: {
     message: 'Please fill in all required fields.',
     statusCode: 400
+  },
+  INVALID_REFRESH_TOKEN: {
+    message: 'Invalid refresh token.',
+    statusCode: 401
+  },
+  REFRESH_TOKEN_EXPIRED: {
+    message: 'Refresh token has expired. Please log in again.',
+    statusCode: 401
+  },
+  REFRESH_TOKEN_REQUIRED: {
+    message: 'Refresh token is required.',
+    statusCode: 400
+  },
+  VALIDATION_ERROR: {
+    message: 'Validation failed',
+    statusCode: 400,
   }
 } as const;
 

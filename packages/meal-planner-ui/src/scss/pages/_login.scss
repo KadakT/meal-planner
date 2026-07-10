@@ -58,10 +58,17 @@
 		}
 		@include respond(big-phone){
 			width: 50%;
+			padding: 2rem 2.5rem 4rem 2.5rem;
 		}
 	}
 	h2, form{
 		margin-bottom: 1.5rem;
 	}
+	.custom-checkbox{
+		margin-left: 43px;
+	}
 
+	app-auth-form{
+		width: 100%;
+	}
 }

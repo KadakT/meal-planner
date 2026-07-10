@@ -24,13 +24,56 @@ export const createRecipe = async (req: AuthRequest, res: Response) => {
 
 export const getRecipes = async (req: AuthRequest, res: Response) => {
   try {
-    const recipes = await Recipe.find({ userId: req.userId })
-      .sort({ createdAt: -1 });
+    const page = Math.max(Number(req.query.page) || 1, 1);
+    const limit = Math.max(Number(req.query.limit) || 10, 1);
+    const skip = (page - 1) * limit;
 
-    res.json(recipes);
+    const filter = {
+      userId: req.userId,
+    };
 
+    const [recipes, total] = await Promise.all([
+      Recipe.find(filter)
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(limit),
+      Recipe.countDocuments(filter),
+    ]);
+
+    res.json({
+      data: recipes,
+      pagination: {
+        page,
+        limit,
+        total,
+        totalPages: Math.ceil(total / limit),
+      },
+    });
   } catch (error) {
     res.status(500).json({ message: 'Failed to fetch recipes' });
+  }
+};
+
+export const getRecipeById = async (req: AuthRequest, res: Response) => {
+  try {
+    const recipeId = req.params.id;
+
+    const recipe = await Recipe.findOne({
+      _id: recipeId,
+      userId: req.userId
+    });
+
+    if (!recipe) {
+      return res.status(404).json({
+        message: 'Recipe not found or not owned by user'
+      });
+    }
+
+    res.json(recipe);
+
+  } catch (error) {
+    console.error('GET RECIPE BY ID ERROR:', error);
+    res.status(500).json({ message: 'Failed to fetch recipe' });
   }
 };
 
@@ -45,7 +88,7 @@ export const updateRecipe = async (req: AuthRequest, res: Response) => {
     );
 
     if (!recipe) {
-     return (new ApiError('RECIPE_NOT_FOUND'));
+      return (new ApiError('RECIPE_NOT_FOUND'));
     }
 
     res.json(recipe);

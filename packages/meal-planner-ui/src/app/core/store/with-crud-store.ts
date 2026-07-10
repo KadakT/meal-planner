@@ -1,14 +1,9 @@
 import { patchState, signalStoreFeature, withMethods, withState } from "@ngrx/signals";
-import { CrudState } from "./crud-state";
+import { CrudState, CrudStoreConfig, PaginatedResponse } from "./crud-state";
 import { inject } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { catchError, EMPTY, finalize, tap, throwError } from "rxjs";
 import { setLoading } from "../helpers/set-loading.helper";
-
-export interface CrudStoreConfig<TEntity, TApi = TEntity> {
-    baseUrl: string;
-    mapFromApi?: (item: TApi) => TEntity;
-}
 
 export function withCrudStore<
     TEntity extends { id: string | number },
@@ -21,6 +16,7 @@ export function withCrudStore<
 
         withState<CrudState<TEntity>>({
             items: [],
+            pagination: null,
             currentItem: null,
             loading: {
                 load: false,
@@ -33,38 +29,40 @@ export function withCrudStore<
         }),
 
         withMethods((store, http = inject(HttpClient)) => ({
-            load: () => {
-
+            load: (page = 1, limit = 10) => {
                 if (store.loading().load) return EMPTY;
 
                 setLoading(store, 'load', true);
 
-                return http.get<TApi[]>(config.baseUrl).pipe(
+                const params = {
+                    page,
+                    limit,
+                };
 
-                    tap((itemsFromApi) => {
-                        const mapFromApi = (item: TApi): TEntity =>
-                            config.mapFromApi
-                                ? config.mapFromApi(item)
-                                : item as unknown as TEntity;
-                        patchState(store, {
-                            items: itemsFromApi.map(mapFromApi),
-                        });
-                    }),
+                const mapFromApi = (item: TApi): TEntity =>
+                    config.mapFromApi
+                        ? config.mapFromApi(item)
+                        : item as unknown as TEntity;
 
-                    catchError(err => {
+                return http
+                    .get<PaginatedResponse<TApi>>(config.baseUrl, { params })
+                    .pipe(
+                        tap((response) => {
+                            patchState(store, {
+                                items: response.data.map(mapFromApi),
+                                pagination: response.pagination,
+                            });
+                        }),
 
-                        patchState(store, { error: err.message });
-                        return throwError(() => err);
+                        catchError((err) => {
+                            patchState(store, { error: err.message });
+                            return throwError(() => err);
+                        }),
 
-                    }),
-
-                    finalize(() => {
-
-                        setLoading(store, 'load', false);
-
-                    })
-
-                );
+                        finalize(() => {
+                            setLoading(store, 'load', false);
+                        })
+                    );
             },
 
             loadById: (id: string | number) => {
@@ -139,6 +137,7 @@ export function withCrudStore<
                         const mapped = config.mapFromApi ? config.mapFromApi(updated) : (updated as unknown as TEntity);
 
                         patchState(store, {
+                            currentItem: mapped,
                             items: store.items().map(i =>
                                 i.id === mapped.id ? mapped : i
                             )
@@ -179,7 +178,13 @@ export function withCrudStore<
                     })
 
                 );
-            }
+            },
+
+            clearCurrentItem: () => {
+                patchState(store, {
+                    currentItem: null
+                });
+            },
         }))
     );
 }

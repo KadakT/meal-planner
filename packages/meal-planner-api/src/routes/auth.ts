@@ -1,35 +1,72 @@
 import { Router, Request, Response, NextFunction } from 'express';
 import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
+import jwt, { TokenExpiredError } from 'jsonwebtoken';
 import { User } from '../models/user.model';
 import { ApiError } from '../utils/api-error';
 import { RegisterPayload } from '@meal-planner/shared';
 
 const router = Router();
 
-const JWT_SECRET = process.env.JWT_SECRET as string;
+const generateAccessToken = (user: any) => {
+  return jwt.sign(
+    { userId: user._id, email: user.email },
+    process.env.JWT_SECRET as string,
+    { expiresIn: '15m' }
+  );
+};
+
+const generateRefreshToken = (user: any, rememberMe: boolean) => {
+  return jwt.sign(
+    {
+      userId: user._id,
+      rememberMe,
+    },
+    process.env.REFRESH_TOKEN_SECRET as string,
+    {
+      expiresIn: rememberMe ? '7d' : '1h',
+    }
+  );
+};
+
+const buildUserResponse = (user: any) => ({
+  id: user._id.toString(),
+  email: user.email,
+  name: user.name,
+});
+
+const setRefreshTokenCookie = (
+  res: Response,
+  refreshToken: string,
+  rememberMe: boolean
+): void => {
+  res.cookie('refresh_token', refreshToken, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'lax',
+    path: '/',
+    maxAge: rememberMe
+      ? 30 * 24 * 60 * 60 * 1000 // 30 days
+      : undefined, // session cookie
+  });
+};
 
 // Register
 router.post('/register', async (req: Request, res: Response, next: NextFunction) => {
   try {
-    console.log(req.body);
-    const { email, name, password }: RegisterPayload = req.body;
+    const { email, name, password, rememberMe }: RegisterPayload = req.body;
 
-    // 1. Validate input
     if (!email || !password || !name) {
       return next(new ApiError('EMAIL_NAME_AND_PASSWORD_REQUIRED'));
     }
 
-    // 2. Check if user already exists
     const existingUser = await User.findOne({ email });
+
     if (existingUser) {
       return next(new ApiError('USER_EXISTS'));
     }
 
-    // 3. Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // 4. Create and save new user
     const newUser = new User({
       email,
       name,
@@ -38,74 +75,126 @@ router.post('/register', async (req: Request, res: Response, next: NextFunction)
 
     await newUser.save();
 
-    // 5. Generate JWT token
-    console.log('JWT_SECRET from auth:', JWT_SECRET);
-    const token = jwt.sign(
-      { userId: newUser._id, email: newUser.email },
-      JWT_SECRET,
-      { expiresIn: '2h' }
-    );
+    const accessToken = generateAccessToken(newUser);
+    const refreshToken = generateRefreshToken(newUser, rememberMe);
 
-    // 6. Prepare user data for frontend
-    const userResponse = {
-      id: newUser._id.toString(),
-      email: newUser.email,
-      name: newUser.name,
-    };
+    newUser.refreshToken = refreshToken;
+    await newUser.save();
 
-    // 7. Send response
+    setRefreshTokenCookie(res, refreshToken, rememberMe);
+
     return res.status(201).json({
-      user: userResponse,
-      token,
+      user: buildUserResponse(newUser),
+      accessToken,
       message: 'User registered successfully',
     });
 
-  } catch (error) {
-    console.error('Register error:', error);
-    return next(new ApiError('INTERNAL_SERVER_ERROR'));
+  } catch (err) {
+    return next(err);
   }
 });
 
 // Login
 router.post('/login', async (req: Request, res: Response, next: NextFunction) => {
-  const { email, password } = req.body;
-
   try {
-    // 1. Check if user exists
+    const { email, password, rememberMe } = req.body;
+    console.log('Login request:', { email, rememberMe });
+
     const user = await User.findOne({ email });
+
     if (!user) {
       return next(new ApiError('USER_NOT_FOUND'));
     }
 
-    // 2. Validate password
     const isMatch = await bcrypt.compare(password, user.password);
+
     if (!isMatch) {
       return next(new ApiError('INVALID_CREDENTIALS'));
     }
 
-    // 3. Generate JWT
-    const token = jwt.sign(
-      { userId: user._id, email: user.email },
-      JWT_SECRET,
-      { expiresIn: '2h' }
-    );
+    const accessToken = generateAccessToken(user);
+    const refreshToken = generateRefreshToken(user, rememberMe);
 
-    // 4. Prepare safe user object for frontend (no password)
-    const userResponse = {
-      id: user._id.toString(),
-      email: user.email,
-      name: user.name,
-    };
+    user.refreshToken = refreshToken;
+    await user.save();
 
-    // 5. Send response
+    setRefreshTokenCookie(res, refreshToken, rememberMe);
+
     return res.status(200).json({
-      user: userResponse,
-      token,
+      user: buildUserResponse(user),
+      accessToken,
       message: 'Login successful',
     });
 
   } catch (err) {
     console.error('Login error:', err);
+    return next(new ApiError('INTERNAL_SERVER_ERROR'));
+  }
+});
+
+// Refresh token
+router.post('/refresh', async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const refreshToken = req.cookies?.refresh_token;
+
+    if (!refreshToken) {
+      return next(new ApiError('REFRESH_TOKEN_REQUIRED'));
+    }
+
+    const decoded = jwt.verify(
+      refreshToken,
+      process.env.REFRESH_TOKEN_SECRET as string
+    ) as { userId: string; rememberMe: boolean; };
+
+    const user = await User.findById(decoded.userId);
+
+    if (!user || user.refreshToken !== refreshToken) {
+      return next(new ApiError('INVALID_REFRESH_TOKEN'));
+    }
+
+    const rememberMe = decoded.rememberMe;
+
+    const newAccessToken = generateAccessToken(user);
+    const newRefreshToken = generateRefreshToken(user, rememberMe);
+
+    user.refreshToken = newRefreshToken;
+    await user.save();
+
+    setRefreshTokenCookie(res, newRefreshToken, rememberMe);
+
+    return res.status(200).json({
+      user: buildUserResponse(user),
+      accessToken: newAccessToken,
+      message: 'Token refreshed successfully',
+    });
+
+  } catch (error) {
+    if (error instanceof TokenExpiredError) {
+      return next(new ApiError('REFRESH_TOKEN_EXPIRED'));
+    }
+    console.error('Refresh token error:', error);
+    return next(new ApiError('INVALID_REFRESH_TOKEN'));
+  }
+});
+
+// Logout
+router.post('/logout', async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { refreshToken } = req.body;
+
+    if (refreshToken) {
+      await User.findOneAndUpdate(
+        { refreshToken },
+        { refreshToken: undefined }
+      );
+    }
+
+    return res.status(200).json({
+      message: 'Logout successful',
+    });
+
+  } catch (error) {
+    console.error('Logout error:', error);
     return next(new ApiError('INTERNAL_SERVER_ERROR'));
   }
 });

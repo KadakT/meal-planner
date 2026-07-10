@@ -23,6 +23,9 @@ const UserSchema = new mongoose_1.Schema({
         required: [true, 'Password is required'],
         minlength: [8, 'Password must be at least 8 characters long'],
     },
+    refreshToken: {
+        type: String,
+    },
 }, {
     timestamps: true, // adds createdAt and updatedAt automatically
 });

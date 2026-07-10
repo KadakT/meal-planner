@@ -3,9 +3,29 @@
     <ul>
       <li><a routerLink="/overview" 
               class="sidebar__item" 
-              routerLinkActive="active">Overview</a></li>
-      <li><a routerLink="/recipes" class="sidebar__item" routerLinkActive="active">Recipes</a></li>
-      <li><a routerLink="/settings" class="sidebar__item" routerLinkActive="active">Settings</a></li>
+              routerLinkActive="active">
+              <mat-icon>dashboard</mat-icon>
+              Overview
+            </a>
+      </li>
+      <li>
+        <a routerLink="/recipes" class="sidebar__item" routerLinkActive="active">
+          <mat-icon>restaurant_menu</mat-icon>
+          Recipes
+        </a>
+      </li>
+      <li>
+        <a routerLink="/settings" class="sidebar__item" routerLinkActive="active">
+          <mat-icon>settings</mat-icon>
+          Settings
+        </a>
+      </li>
+      <li>
+        <a (click)="logOut()" class="sidebar__item" routerLinkActive="active">
+          <mat-icon>logout</mat-icon>
+          Logout
+        </a>
+      </li>
     </ul>
   </nav>
 </div>

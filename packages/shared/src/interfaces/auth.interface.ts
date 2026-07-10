@@ -14,12 +14,6 @@ export interface RegisterPayload extends LoginPayload {
   name: string;
 }
 
-export interface AuthResponse {
-  user: User;
-  token: string;
-  message?: string;
-}
-
 export interface ApiError {
   code: string;
   message: string;

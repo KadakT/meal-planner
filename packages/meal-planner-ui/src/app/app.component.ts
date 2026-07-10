@@ -32,6 +32,7 @@ export class AppComponent implements OnInit{
   appLanguage = 'en';
 
   constructor() {
+    this.store.dispatch(AuthActions.autoLogin());
     this.translate.setFallbackLang('en');
     this.translate.use('en');
   }

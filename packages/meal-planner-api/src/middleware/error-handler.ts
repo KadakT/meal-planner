@@ -1,24 +1,40 @@
-import { NextFunction, Response, Request } from "express";
-import { ApiError } from "../utils/api-error";
+import { Request, Response, NextFunction } from 'express';
+import mongoose from 'mongoose';
+import { ApiError } from '../utils/api-error';
 
 export const globalErrorHandler = (
   err: unknown,
   req: Request,
   res: Response,
   next: NextFunction
-): void => {
-  if (err instanceof ApiError) {
-    res.status(err.statusCode).json({
-      errorCode: err.errorCode,
-      message: err.message,
+) => {
+  if (err instanceof mongoose.Error.ValidationError) {
+    const details = Object.values(err.errors).map((error) => ({
+      field: error.path,
+      message: error.message,
+    }));
+
+    const apiError = new ApiError('VALIDATION_ERROR', details);
+
+    return res.status(apiError.statusCode).json({
+      errorCode: apiError.errorCode,
+      message: apiError.message,
+      details: apiError.details,
     });
-    return;
   }
 
-  console.error('Unhandled error:', err);
+  if (err instanceof ApiError) {
+    return res.status(err.statusCode).json({
+      errorCode: err.errorCode,
+      message: err.message,
+      details: err.details,
+    });
+  }
 
-  res.status(500).json({
-    errorCode: 'INTERNAL_SERVER_ERROR',
-    message: 'Something went wrong.',
+  const fallbackError = new ApiError('INTERNAL_SERVER_ERROR');
+
+  return res.status(fallbackError.statusCode).json({
+    errorCode: fallbackError.errorCode,
+    message: fallbackError.message,
   });
 };

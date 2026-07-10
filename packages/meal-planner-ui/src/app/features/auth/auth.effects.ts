@@ -1,10 +1,9 @@
 import { inject, Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { AuthService, TokenService } from "app/core/services";
+import { AuthService } from "app/core/services";
 import { AuthActions } from "./auth.actions";
-import { catchError, map, mergeMap, of, tap } from "rxjs";
+import { catchError, exhaustMap, map, mergeMap, of, tap } from "rxjs";
 import { User } from "./auth.model";
-import { SessionKeys } from "app/shared/definitions";
 
 @Injectable()
 
@@ -24,8 +23,8 @@ export class AuthEffects {
       ofType(AuthActions.loginStart),
       mergeMap(({ email, password, rememberMe }) =>
         this.authService.login({ email, password, rememberMe }).pipe(
-          map(({ user, token }) => {
-            return AuthActions.loginSuccess({ user, token, rememberMe });
+          map(({ user, accessToken }) => {
+            return AuthActions.loginSuccess({ user, accessToken });
           }),
           catchError(err =>
             of(AuthActions.loginFailure({ error: err?.message || 'Login failed' }))
@@ -39,13 +38,27 @@ export class AuthEffects {
     this.actions$.pipe(
       ofType(AuthActions.autoLogin),
       map(() => {
-        const stored = localStorage.getItem(SessionKeys.AuthData) || sessionStorage.getItem(SessionKeys.AuthData);
-        if (!stored) return AuthActions.logout();
-        const { user, token } = JSON.parse(stored);
-        return AuthActions.autoLoginSuccess({ user, token });
-      }),
-      catchError(err =>
-            of(AuthActions.loginFailure({ error: err?.message || 'Login failed' }))
+        const refreshToken = this.authService.getRefreshToken();
+
+        if (!refreshToken) {
+          return AuthActions.autoLoginFailure();
+        }
+
+        return AuthActions.refreshTokenStart();
+      })
+    )
+  );
+
+  refreshToken$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AuthActions.refreshTokenStart),
+      exhaustMap(() =>
+        this.authService.refreshToken().pipe(
+          map(({ user, accessToken }) =>
+            AuthActions.refreshTokenSuccess({ user, accessToken })
+          ),
+          catchError(() => of(AuthActions.refreshTokenFailure()))
+        )
       )
     )
   );
@@ -54,30 +67,30 @@ export class AuthEffects {
     () =>
       this.actions$.pipe(
         ofType(AuthActions.loginSuccess),
-        tap(({user, token, rememberMe}) => this.authService.handleSuccessfulLogin(user, token, rememberMe))
+        tap(() => this.authService.handleSuccessfulLogin())
       ),
-      { dispatch : false}
+    { dispatch: false }
   );
 
   logout$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(AuthActions.logout),
+        ofType(AuthActions.logout, AuthActions.refreshTokenFailure),
         tap(() => this.authService.logout())
       ),
-      { dispatch : false }
+    { dispatch: false }
   );
 
   register$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActions.registerStart),
-      mergeMap(({email, name, password, rememberMe}) =>
+      mergeMap(({ email, name, password, rememberMe }) =>
         this.authService.registerUser({ email, name, password, rememberMe }).pipe(
-          map(({ user, token })=>
-            AuthActions.registerSuccess({ user, token, rememberMe})
+          map(({ user, accessToken }) =>
+            AuthActions.registerSuccess({ user, accessToken, rememberMe })
           ),
           catchError(err =>
-            of(AuthActions.registerFailure({ error: err?.message || 'Register failed'}))
+            of(AuthActions.registerFailure({ error: err?.message || 'Register failed' }))
           )
         )
       )
@@ -88,9 +101,9 @@ export class AuthEffects {
     () =>
       this.actions$.pipe(
         ofType(AuthActions.registerSuccess),
-          tap(({ user, token, rememberMe }) =>  this.authService.handleSuccessfulLogin(user, token, rememberMe))
+        tap(() => this.authService.handleSuccessfulLogin( ))
       ),
-      { dispatch: false }
+    { dispatch: false }
   );
 
 

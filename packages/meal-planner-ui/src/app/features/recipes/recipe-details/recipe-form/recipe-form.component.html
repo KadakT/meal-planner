@@ -101,7 +101,10 @@
         <mat-label>{{ 'FORM.NOTES' | translate }}</mat-label>
         <textarea matInput [field]="recipeForm.notes"></textarea>
     </mat-form-field>
-    <button type="submit" mat-raised-button color="primary">
+    <app-button (click)="onCancel()">
+         {{ 'BUTTONS.CANCEL' | translate }}
+    </app-button>
+    <app-button [btnType]="'submit'">
         {{ 'BUTTONS.SAVE' | translate }}
-    </button>
+    </app-button>
 </form>

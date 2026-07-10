@@ -28,7 +28,8 @@ export const AppStore = signalStore(
             } else {
                 patchState(store, { selectedTheme: 'dark' });
                 storageService.setCookie(CookieKeys.Theme, 'dark');
-                addThemeCalss(cookiesThemeValue);
+                console.log(cookiesThemeValue + ' cookiesThemeValue');
+                addThemeCalss('dark');
             }
         }
     }),

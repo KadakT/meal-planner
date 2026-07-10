@@ -2,12 +2,13 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { environment } from './../../../environments/environment';
 import { BehaviorSubject, catchError, delay, finalize, Observable, throwError } from 'rxjs';
-import { ApiError, AuthResponse, LoginPayload, RegisterPayload } from '@meal-planner/shared';
+import { ApiError, LoginPayload, RegisterPayload } from '@meal-planner/shared';
 import { LoadingService } from './loading.service';
 import { SessionKeys, TOKEN_TTL } from 'app/shared/definitions';
 import { TokenService } from './token.service';
 import { Router } from '@angular/router';
-import { User } from 'app/features/auth/auth.model';
+import { AuthResponse, RefreshResponse, User } from 'app/features/auth/auth.model';
+import { CookieService } from 'ngx-cookie-service';
 
 
 @Injectable({
@@ -21,11 +22,13 @@ export class AuthService {
   private router = inject(Router);
   private http = inject(HttpClient);
   private loggedIn = new BehaviorSubject<boolean>(false);
+  private readonly cookieService = inject(CookieService);
+  private readonly refreshTokenKey = 'refresh_token';
 
 
-  login(credentials: LoginPayload): Observable<{ user: User, token: string}> {
+  login(credentials: LoginPayload): Observable<AuthResponse> {
     this.loadingService.setLoading(true);
-    return this.http.post<{ user: User, token: string }>(`${this.apiUrl}/auth/login`, credentials).pipe(
+    return this.http.post<AuthResponse>(`${this.apiUrl}/auth/login`, credentials, { withCredentials: true }).pipe(
       catchError(this.handleError),
       finalize(() => {
         this.loadingService.setLoading(false);
@@ -37,24 +40,35 @@ export class AuthService {
     return this.http.get(`${environment.apiUrl}/test`);
   }
 
-  registerUser(userData: RegisterPayload): Observable<{ user: User, token: string}> {
+  registerUser(userData: RegisterPayload): Observable<AuthResponse> {
     this.loadingService.setLoading(true);
-    return this.http.post<{ user: User, token: string}>(`${environment.apiUrl}/auth/register`, userData).pipe(
+    return this.http.post<AuthResponse>(`${environment.apiUrl}/auth/register`, userData, { withCredentials: true }).pipe(
       catchError(this.handleError),
       finalize(() => {
         this.loadingService.setLoading(false);
       })
     );
   }
-  
+
+  refreshToken(): Observable<RefreshResponse> {
+    return this.http.post<RefreshResponse>(
+      `${environment.apiUrl}/auth/refresh`,
+        {},
+    { withCredentials: true }
+    );
+  }
+
   isLoggedIn(): boolean {
     return !!this.tokenService.getToken();
   }
 
-  handleSuccessfulLogin(user: User, token: string, rememberMe: boolean) : void{
-    this.tokenService.storeAuthDataWithExpiry(token, rememberMe, TOKEN_TTL.REMEMBER_ME, user);
+  handleSuccessfulLogin(): void {
     delay(1000),
-    this.router.navigate(['/overview']);
+      this.router.navigate(['/overview']);
+  }
+
+  getRefreshToken(): string | null {
+    return this.cookieService.get(this.refreshTokenKey) || null;
   }
 
   private handleError(error: HttpErrorResponse) {
@@ -65,10 +79,10 @@ export class AuthService {
     return throwError(() => apiError);
   }
 
-  logout(){
-        localStorage.removeItem(SessionKeys.AuthData);
-        sessionStorage.removeItem(SessionKeys.AuthData);
-        this.router.navigate(['/login']);
-        this.loggedIn.next(false);
+  logout() {
+    localStorage.removeItem(SessionKeys.AuthData);
+    sessionStorage.removeItem(SessionKeys.AuthData);
+    this.router.navigate(['/login']);
+    this.loggedIn.next(false);
   }
 }

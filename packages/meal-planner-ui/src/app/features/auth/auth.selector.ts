@@ -4,7 +4,7 @@ import { AuthState } from "./auth.model";
 export const selectAuthState = createFeatureSelector<AuthState>('auth');
 
 export const selectUser = createSelector(selectAuthState, s => s.user);
-export const selectToken = createSelector(selectAuthState, s => s.token);
+export const selectAccessToken = createSelector(selectAuthState, s => s.accessToken);
 export const selectIsAuthenticate = createSelector(selectAuthState, s => s.isAuthenticated);
 export const selectAuthError = createSelector(selectAuthState, s => s.error);
 export const selectAuthLoading = createSelector(selectAuthState, s => s.loading);

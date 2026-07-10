@@ -1,4 +1,18 @@
 header {
     display: flex;
-    justify-content: end;
+    justify-content: center;
+
+    app-theme-switch,
+    .logo{
+        margin-left: auto;
+    }
+
+    .logo img{
+        height: 65px;
+        width: 65px;
+    }
+
+    .logo span{
+        font-size: 1.5rem;
+    }
 }

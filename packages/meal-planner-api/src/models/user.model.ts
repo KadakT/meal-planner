@@ -3,6 +3,7 @@ import { Schema, model, Document, Types } from 'mongoose';
 // 1️⃣ Define TypeScript interface for type safety
 export interface IUser extends Document {
   _id: Types.ObjectId;
+  refreshToken?: string;
   name: string;        // user's display name
   email: string;       // unique email address
   password: string;    // hashed password
@@ -31,6 +32,9 @@ const UserSchema: Schema<IUser> = new Schema<IUser>(
       type: String,
       required: [true, 'Password is required'],
       minlength: [8, 'Password must be at least 8 characters long'],
+    },
+    refreshToken: {
+      type: String,
     },
   },
   {

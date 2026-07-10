@@ -4,12 +4,14 @@ import { Router } from "@angular/router";
 import { AuthFormComponent, ButtonsComponent } from "@components/index";
 import { RegisterPayload } from "@meal-planner/shared";
 import { Store } from "@ngrx/store";
+import { TranslateModule } from "@ngx-translate/core";
 import { AuthActions } from "app/features/auth/auth.actions";
+import { ButtonVariant } from "app/shared/constants/ui/button.constants";
 
 @Component({
     selector: 'app-register',
     standalone: true,
-    imports: [AuthFormComponent, ButtonsComponent],
+    imports: [AuthFormComponent, ButtonsComponent, TranslateModule],
     template: `
     <div class="login">
         <div class="login__container">
@@ -17,17 +19,17 @@ import { AuthActions } from "app/features/auth/auth.actions";
                 <div class="login__welcome-text">
                     <div class="logo logo--big">
                           <img src="assets/svg/logo.svg" width="100" alt="Meal Planner Logo">
-                          <h1>Meal Planner</h1>
+                          <h1>{{ 'PAGES.AUTH.TITLE' | translate }}</h1>
                       </div>
                 </div>
             </div>
             <div class="login__sign-in">
                     <p>{{ errorMessage }}</p>
                     <app-auth-form [mode]="'register'" (onSubmitCredentials)="formSubmitted($event)">
-                        <h2>Register</h2>
-                        <app-button [btnClass]="'btn btn-primary'" [btnType]="'submit'">Register</app-button>
+                        <h2>{{ 'PAGES.AUTH.REGISTER.TITLE' | translate }}</h2>
+                        <app-button [btnVariant]="ButtonVariant.Primary" [btnClass]="'w-full'" [btnType]="'submit'">{{ 'PAGES.AUTH.REGISTER.TITLE' | translate }}</app-button>
                     </app-auth-form>
-                        <p>Already a user? <a (click)="switchForm()" tabindex="0">Sign In</a></p>
+                        <p>{{ 'PAGES.AUTH.REGISTER.TITLE_EXISTING' | translate }} <a (click)="switchForm()" tabindex="0">{{ 'PAGES.AUTH.REGISTER.LOGIN_LINK' | translate }}</a></p>
             </div>
         </div>
     </div>
@@ -37,6 +39,8 @@ import { AuthActions } from "app/features/auth/auth.actions";
 
 export class RegisterComponent {
     public errorMessage: string = '';
+
+    protected readonly ButtonVariant = ButtonVariant;
 
     private router = inject(Router);
     private store = inject(Store);
